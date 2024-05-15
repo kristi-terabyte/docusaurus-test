@@ -4,32 +4,32 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Purring',
+    Svg: require('@site/static/img/purr-cat-1.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        The soothing sound of a cat's purr often brings comfort and contentment to those nearby, 
+        symbolizing their relaxed and affectionate nature.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Whiskers',
+    Svg: require('@site/static/img/purr-sitting-cat-2.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Cats' sensitive whiskers serve as finely tuned sensors, 
+        aiding in navigation and communication, adding to their mystique and grace.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Sunbeams',
+    Svg: require('@site/static/img/purr-remote-work.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Cats are known for seeking the sun's rays to bask, 
+        embodying their love of warmth and leisure, creating picturesque scenes of relaxation and tranquility.
       </>
     ),
   },
