@@ -8,9 +8,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Documentation site',
-  tagline: 'How to create your documentation site with Docusaurus',
-  favicon: 'img/favicon.ico',
+  title: 'Kristina Bulavin, KP-32',
+  tagline: 'Cats are cute, especially kittens.',
+  favicon: 'img/cat.ico',
 
   // Set the production url of your site here
   url: 'https://kristi-terabyte.github.io',
@@ -66,17 +66,17 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: 'Cat Site',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/cat-vector-logo.png',
         },
         items: [
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Home',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -90,16 +90,16 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Cats\' Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Home',
                 to: '/docs/intro',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Docusaurus Community',
             items: [
               {
                 label: 'Stack Overflow',
@@ -124,12 +124,12 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/kristi-terabyte',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Kristina's project, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
