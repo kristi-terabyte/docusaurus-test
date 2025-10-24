@@ -6,9 +6,13 @@
 \usepackage{polyglossia}
 \setdefaultlanguage{ukrainian}
 \setotherlanguage{english}
-\setmainfont{TeX Gyre Termes}
-\setsansfont{TeX Gyre Heros}
-\setmonofont{TeX Gyre Cursor}
+% Use CMU fonts with Cyrillic support
+\setmainfont{CMU Serif}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
+\newfontfamily\cyrillicfont{CMU Serif}
+\newfontfamily\cyrillicfontsf{CMU Sans Serif}
+\newfontfamily\cyrillicfonttt{CMU Typewriter Text}
 
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{setspace}
@@ -66,6 +70,7 @@
 \begin{document}
 
 % Title page
+\title{\WorkType: \Topic}
 \maketitle
 \thispagestyle{empty}
 \clearpage
