@@ -1,0 +1,16 @@
+\babel@toc {ukrainian}{}\relax 
+\contentsline {section}{Перелік умовних скорочень}{2}{section*.2}%
+\contentsline {section}{\numberline {1}Вступ}{2}{section.1}%
+\contentsline {section}{\numberline {2}Огляд предметної області і вимоги}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Актори}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Функціональні вимоги}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Нефункціональні вимоги}{3}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Діаграма прецедентів (Use Case)}{3}{section.3}%
+\contentsline {section}{\numberline {4}Архітектура та структура рішення}{4}{section.4}%
+\contentsline {section}{\numberline {5}ER-діаграма бази даних}{4}{section.5}%
+\contentsline {section}{\numberline {6}Діаграма класів}{5}{section.6}%
+\contentsline {section}{\numberline {7}Діаграма активностей (workflow) замовлення}{6}{section.7}%
+\contentsline {section}{\numberline {8}Проєктування інтерфейсу користувача}{6}{section.8}%
+\contentsline {section}{\numberline {9}Економічне обґрунтування та план впровадження}{6}{section.9}%
+\contentsline {section}{\numberline {10}Висновки}{7}{section.10}%
+\contentsline {section}{Список використаних джерел}{7}{section*.8}%
