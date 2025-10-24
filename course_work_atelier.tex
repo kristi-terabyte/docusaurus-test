@@ -1,0 +1,1230 @@
+\documentclass[14pt,a4paper]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[ukrainian]{babel}
+\usepackage{geometry}
+\geometry{left=3cm,right=1cm,top=2cm,bottom=2cm}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{tikz}
+\usepackage{pgf-umlcd}
+\usepackage{pgf-umlsd}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{titlesec}
+
+% Налаштування відступів для розділів
+\titleformat{\section}
+  {\normalfont\fontsize{14}{16}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\fontsize{14}{16}\bfseries}{\thesubsection}{1em}{}
+
+% Налаштування змісту
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+\begin{document}
+
+% Титульна сторінка
+\begin{titlepage}
+\centering
+\textbf{МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ}\\
+\textbf{[НАЗВА УНІВЕРСИТЕТУ]}\\[0.5cm]
+\textbf{Факультет [назва факультету]}\\
+\textbf{Кафедра [назва кафедри]}\\[3cm]
+
+{\Large\textbf{КУРСОВА РОБОТА}}\\[0.5cm]
+з дисципліни «[Назва дисципліни]»\\[0.5cm]
+на тему:\\[0.5cm]
+{\Large\textbf{«ІНФОРМАЦІЙНА СИСТЕМА УПРАВЛІННЯ\\АТЕЛЬЄ»}}\\[3cm]
+
+\begin{flushright}
+Виконав:\\
+студент групи [номер групи]\\
+[ПІБ студента]\\[1cm]
+Перевірив:\\
+[ПІБ викладача]\\
+[посада, науковий ступінь]
+\end{flushright}
+
+\vfill
+
+Місто, 2025
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{ВСТУП}
+
+\subsection{Актуальність теми}
+
+Сучасний розвиток інформаційних технологій створює нові можливості для автоматизації бізнес-процесів у різних галузях економіки. Ательє як підприємство, що надає послуги з пошиття та ремонту одягу, потребує ефективної системи управління для підвищення якості обслуговування клієнтів та оптимізації виробничих процесів.
+
+Актуальність розробки інформаційної системи для ательє обумовлена наступними факторами:
+\begin{itemize}
+    \item необхідність автоматизації обліку замовлень та клієнтів;
+    \item потреба у контролі виконання замовлень та завантаженості працівників;
+    \item важливість ведення складського обліку матеріалів;
+    \item необхідність формування звітності для аналізу діяльності підприємства;
+    \item підвищення конкурентоспроможності за рахунок покращення якості обслуговування.
+\end{itemize}
+
+\subsection{Мета та завдання курсової роботи}
+
+\textbf{Мета роботи:} розробка інформаційної системи управління ательє для автоматизації основних бізнес-процесів підприємства.
+
+\textbf{Завдання роботи:}
+\begin{enumerate}
+    \item Проаналізувати предметну область та виявити основні бізнес-процеси ательє;
+    \item Визначити функціональні вимоги до інформаційної системи;
+    \item Розробити діаграми прецедентів для визначення взаємодії користувачів з системою;
+    \item Створити діаграму класів для опису структури системи;
+    \item Розробити модель бази даних;
+    \item Описати архітектуру системи;
+    \item Розробити діаграми діяльності для ключових бізнес-процесів.
+\end{enumerate}
+
+\subsection{Об'єкт та предмет дослідження}
+
+\textbf{Об'єкт дослідження:} бізнес-процеси ательє з пошиття та ремонту одягу.
+
+\textbf{Предмет дослідження:} методи та засоби автоматизації управління діяльністю ательє.
+
+\newpage
+\section{АНАЛІЗ ПРЕДМЕТНОЇ ОБЛАСТІ}
+
+\subsection{Опис предметної області}
+
+Ательє --- це підприємство, що надає послуги з пошиття одягу на замовлення, ремонту та підгонки одягу за розміром клієнта. Основними процесами ательє є:
+
+\begin{itemize}
+    \item \textbf{Прийом замовлень} --- консультація клієнта, зняття мірок, вибір тканини та фасону, визначення вартості та термінів виконання;
+    \item \textbf{Виробництво} --- розкрій тканини, пошиття виробу, примірка та коригування;
+    \item \textbf{Видача замовлень} --- перевірка якості, розрахунок з клієнтом, видача готового виробу;
+    \item \textbf{Складський облік} --- облік тканин, фурнітури та інших матеріалів;
+    \item \textbf{Управління персоналом} --- розподіл замовлень між кравцями, облік робочого часу.
+\end{itemize}
+
+\subsection{Основні сутності предметної області}
+
+\begin{enumerate}
+    \item \textbf{Клієнт} --- особа, яка замовляє послуги ательє;
+    \item \textbf{Замовлення} --- конкретне замовлення клієнта на виготовлення або ремонт виробу;
+    \item \textbf{Працівник} --- співробітник ательє (кравець, закрійник, адміністратор);
+    \item \textbf{Послуга} --- вид роботи (пошиття сукні, ремонт брюк, підгонка піджака тощо);
+    \item \textbf{Матеріал} --- тканина, фурнітура та інші матеріали;
+    \item \textbf{Мірки} --- індивідуальні параметри клієнта.
+\end{enumerate}
+
+\subsection{Функціональні вимоги до системи}
+
+Інформаційна система управління ательє повинна забезпечувати:
+
+\begin{enumerate}
+    \item \textbf{Управління клієнтами:}
+    \begin{itemize}
+        \item реєстрація нових клієнтів;
+        \item зберігання контактної інформації;
+        \item зберігання мірок клієнтів;
+        \item історія замовлень клієнта.
+    \end{itemize}
+    
+    \item \textbf{Управління замовленнями:}
+    \begin{itemize}
+        \item створення нових замовлень;
+        \item відстеження статусу виконання;
+        \item призначення виконавців;
+        \item розрахунок вартості;
+        \item контроль термінів виконання.
+    \end{itemize}
+    
+    \item \textbf{Управління матеріалами:}
+    \begin{itemize}
+        \item облік наявності матеріалів на складі;
+        \item облік витрачання матеріалів на замовлення;
+        \item контроль залишків та формування замовлень постачальникам.
+    \end{itemize}
+    
+    \item \textbf{Управління персоналом:}
+    \begin{itemize}
+        \item облік працівників;
+        \item розподіл замовлень між виконавцями;
+        \item контроль завантаженості.
+    \end{itemize}
+    
+    \item \textbf{Звітність:}
+    \begin{itemize}
+        \item звіт по виконаних замовленнях;
+        \item фінансовий звіт;
+        \item звіт по завантаженості працівників;
+        \item звіт по залишках матеріалів.
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+\section{ПРОЕКТУВАННЯ ІНФОРМАЦІЙНОЇ СИСТЕМИ}
+
+\subsection{Діаграма прецедентів}
+
+Діаграма прецедентів (use case diagram) відображає взаємодію користувачів з системою та основні функції, які вона надає.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=0.9, every node/.style={scale=0.85}]
+    % Стиль для акторів
+    \tikzstyle{actor}=[stick figure, minimum size=1.2cm, thick]
+    
+    % Актори зліва
+    \node at (-4,6) {\textbf{Клієнт}};
+    \draw[thick] (-4,5.5) circle (0.3cm);
+    \draw[thick] (-4,5.2) -- (-4,4.2);
+    \draw[thick] (-4.5,4.7) -- (-4,5) -- (-3.5,4.7);
+    \draw[thick] (-4.5,3.7) -- (-4,4.2) -- (-3.5,3.7);
+    
+    \node at (-4,2) {\textbf{Адміністратор}};
+    \draw[thick] (-4,1.5) circle (0.3cm);
+    \draw[thick] (-4,1.2) -- (-4,0.2);
+    \draw[thick] (-4.5,0.7) -- (-4,1) -- (-3.5,0.7);
+    \draw[thick] (-4.5,-0.3) -- (-4,0.2) -- (-3.5,-0.3);
+    
+    \node at (-4,-3) {\textbf{Кравець}};
+    \draw[thick] (-4,-3.5) circle (0.3cm);
+    \draw[thick] (-4,-3.8) -- (-4,-4.8);
+    \draw[thick] (-4.5,-4.3) -- (-4,-4) -- (-3.5,-4.3);
+    \draw[thick] (-4.5,-5.3) -- (-4,-4.8) -- (-3.5,-5.3);
+    
+    % Межа системи
+    \draw[thick] (-0.5,-6.5) rectangle (11,7);
+    \node at (5.2,6.6) {\textbf{Система управління ательє}};
+    
+    % Прецеденти для клієнта
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc1) at (2,5.5) {\small Переглянути\\каталог послуг};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc2) at (6,5.5) {\small Оформити\\замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc3) at (9,5.5) {\small Переглянути\\статус};
+    
+    % Прецеденти для адміністратора
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc4) at (1,2.5) {\small Керування\\клієнтами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc5) at (4,2.5) {\small Керування\\замовленнями};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc6) at (7,2.5) {\small Керування\\послугами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc7) at (1,-0.5) {\small Керування\\матеріалами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc8) at (4,-0.5) {\small Керування\\персоналом};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc9) at (7,-0.5) {\small Формування\\звітів};
+    
+    % Прецеденти для кравця
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc10) at (2.5,-4) {\small Переглянути\\свої замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc11) at (7,-4) {\small Оновити\\статус};
+    
+    % Зв'язки
+    \draw[thick] (-3.5,5) -- (uc1);
+    \draw[thick] (-3.5,5) -- (uc2);
+    \draw[thick] (-3.5,5) -- (uc3);
+    
+    \draw[thick] (-3.5,0.5) -- (uc4);
+    \draw[thick] (-3.5,0.5) -- (uc5);
+    \draw[thick] (-3.5,0.5) -- (uc6);
+    \draw[thick] (-3.5,0.5) -- (uc7);
+    \draw[thick] (-3.5,0.5) -- (uc8);
+    \draw[thick] (-3.5,0.5) -- (uc9);
+    
+    \draw[thick] (-3.5,-4.3) -- (uc10);
+    \draw[thick] (-3.5,-4.3) -- (uc11);
+\end{tikzpicture}
+\caption{Діаграма прецедентів інформаційної системи ательє}
+\end{figure}
+
+\textbf{Опис основних прецедентів:}
+
+\begin{itemize}
+    \item \textbf{Оформити замовлення} --- клієнт або адміністратор створює нове замовлення, вказуючи необхідні послуги, матеріали та терміни виконання;
+    \item \textbf{Керування замовленнями} --- адміністратор може створювати, редагувати та видаляти замовлення, призначати виконавців;
+    \item \textbf{Оновити статус} --- кравець змінює статус замовлення по мірі виконання роботи;
+    \item \textbf{Формування звітів} --- адміністратор формує різні види звітів для аналізу діяльності.
+\end{itemize}
+
+\newpage
+\subsection{Діаграма класів}
+
+Діаграма класів відображає структуру системи, основні класи та зв'язки між ними.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
+    % Клас Client
+    \draw[thick] (0,10) rectangle (3.5,13);
+    \node at (1.75,12.7) {\textbf{Client}};
+    \draw[thick] (0,12.5) -- (3.5,12.5);
+    \node[text width=3.2cm, align=left] at (1.75,11.9) {\small
+        - clientId: int\\
+        - firstName: String\\
+        - lastName: String\\
+        - phone: String\\
+        - email: String
+    };
+    \draw[thick] (0,11.2) -- (3.5,11.2);
+    \node[text width=3.2cm, align=left] at (1.75,10.5) {\small
+        + getFullName()\\
+        + getMeasurements()
+    };
+    
+    % Клас Measurement
+    \draw[thick] (0,6) rectangle (3.5,9);
+    \node at (1.75,8.7) {\textbf{Measurement}};
+    \draw[thick] (0,8.5) -- (3.5,8.5);
+    \node[text width=3.2cm, align=left] at (1.75,7.9) {\small
+        - measurementId: int\\
+        - clientId: int\\
+        - chest: float\\
+        - waist: float\\
+        - height: float
+    };
+    \draw[thick] (0,7.2) -- (3.5,7.2);
+    \node[text width=3.2cm, align=left] at (1.75,6.5) {\small
+        + validate()
+    };
+    
+    % Клас Order
+    \draw[thick] (6,10) rectangle (10,13.5);
+    \node at (8,13.2) {\textbf{Order}};
+    \draw[thick] (6,13) -- (10,13);
+    \node[text width=3.7cm, align=left] at (8,12.1) {\small
+        - orderId: int\\
+        - clientId: int\\
+        - workerId: int\\
+        - orderDate: Date\\
+        - dueDate: Date\\
+        - status: String\\
+        - totalPrice: decimal
+    };
+    \draw[thick] (6,11.2) -- (10,11.2);
+    \node[text width=3.7cm, align=left] at (8,10.5) {\small
+        + calculatePrice()\\
+        + assignWorker()\\
+        + updateStatus()
+    };
+    
+    % Клас Service
+    \draw[thick] (12,10) rectangle (15.5,13);
+    \node at (13.75,12.7) {\textbf{Service}};
+    \draw[thick] (12,12.5) -- (15.5,12.5);
+    \node[text width=3.2cm, align=left] at (13.75,11.9) {\small
+        - serviceId: int\\
+        - name: String\\
+        - description: String\\
+        - basePrice: decimal\\
+        - duration: int
+    };
+    \draw[thick] (12,11.2) -- (15.5,11.2);
+    \node[text width=3.2cm, align=left] at (13.75,10.5) {\small
+        + getPrice()
+    };
+    
+    % Клас OrderItem
+    \draw[thick] (6,6) rectangle (10,9);
+    \node at (8,8.7) {\textbf{OrderItem}};
+    \draw[thick] (6,8.5) -- (10,8.5);
+    \node[text width=3.7cm, align=left] at (8,7.7) {\small
+        - orderItemId: int\\
+        - orderId: int\\
+        - serviceId: int\\
+        - quantity: int\\
+        - price: decimal
+    };
+    \draw[thick] (6,7) -- (10,7);
+    \node[text width=3.7cm, align=left] at (8,6.4) {\small
+        + calculateTotal()
+    };
+    
+    % Клас Worker
+    \draw[thick] (12,6) rectangle (15.5,9);
+    \node at (13.75,8.7) {\textbf{Worker}};
+    \draw[thick] (12,8.5) -- (15.5,8.5);
+    \node[text width=3.2cm, align=left] at (13.75,7.7) {\small
+        - workerId: int\\
+        - firstName: String\\
+        - lastName: String\\
+        - position: String\\
+        - phone: String
+    };
+    \draw[thick] (12,7) -- (15.5,7);
+    \node[text width=3.2cm, align=left] at (13.75,6.4) {\small
+        + getActiveOrders()
+    };
+    
+    % Клас Material
+    \draw[thick] (0,2) rectangle (3.5,5);
+    \node at (1.75,4.7) {\textbf{Material}};
+    \draw[thick] (0,4.5) -- (3.5,4.5);
+    \node[text width=3.2cm, align=left] at (1.75,3.7) {\small
+        - materialId: int\\
+        - name: String\\
+        - unit: String\\
+        - pricePerUnit: decimal\\
+        - stockQuantity: float
+    };
+    \draw[thick] (0,3) -- (3.5,3);
+    \node[text width=3.2cm, align=left] at (1.75,2.4) {\small
+        + checkAvailability()
+    };
+    
+    % Клас MaterialUsage
+    \draw[thick] (6,2) rectangle (10,5);
+    \node at (8,4.7) {\textbf{MaterialUsage}};
+    \draw[thick] (6,4.5) -- (10,4.5);
+    \node[text width=3.7cm, align=left] at (8,3.7) {\small
+        - usageId: int\\
+        - orderId: int\\
+        - materialId: int\\
+        - quantity: float\\
+        - cost: decimal
+    };
+    \draw[thick] (6,3) -- (10,3);
+    \node[text width=3.7cm, align=left] at (8,2.4) {\small
+        + calculateCost()
+    };
+    
+    % Зв'язки
+    \draw[thick, ->] (1.75,10) -- (1.75,9) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (3.5,11.5) -- (6,11.5) node[midway, above] {\small 1..N};
+    \draw[thick, ->] (8,10) -- (8,9) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (10,7.5) -- (12,7.5) node[midway, above] {\small N..1};
+    \draw[thick, ->] (10,11.5) -- (12,11.5) node[midway, above] {\small N..M};
+    \draw[thick, ->] (13.75,6) -- (13.75,4.5) -- (10,4.5) -- (10,9) node[near start, right] {\small 1..N};
+    \draw[thick, ->] (8,6) -- (8,5) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (6,3.5) -- (3.5,3.5) node[midway, above] {\small N..1};
+\end{tikzpicture}
+\caption{Діаграма класів інформаційної системи}
+\end{figure}
+
+\newpage
+\subsection{Модель бази даних}
+
+Концептуальна модель бази даних представлена у вигляді ER-діаграми, яка відображає основні сутності та зв'язки між ними.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=1cm, auto, scale=0.85, every node/.style={scale=0.85}]
+    % Стилі без кольорів
+    \tikzstyle{entity} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
+    \tikzstyle{relationship} = [diamond, draw, thick, text width=2cm, text centered, minimum height=1cm, aspect=2]
+    
+    % Сутності
+    \node[entity] (client) at (0,8) {КЛІЄНТ\\(CLIENT)};
+    \node[entity] (order) at (6,8) {ЗАМОВЛЕННЯ\\(ORDER)};
+    \node[entity] (worker) at (6,4) {ПРАЦІВНИК\\(WORKER)};
+    \node[entity] (service) at (12,8) {ПОСЛУГА\\(SERVICE)};
+    \node[entity] (material) at (0,4) {МАТЕРІАЛ\\(MATERIAL)};
+    \node[entity] (measurement) at (0,0) {МІРКИ\\(MEASUREMENT)};
+    
+    % Зв'язки
+    \node[relationship] (makes) at (3,8) {оформляє};
+    \node[relationship] (executes) at (6,6) {виконує};
+    \node[relationship] (includes) at (9,8) {включає};
+    \node[relationship] (uses) at (3,4) {використовує};
+    \node[relationship] (has) at (0,2) {має};
+    
+    % Лінії зв'язків
+    \draw[thick] (client) -- (makes) node[near start, above] {\small 1};
+    \draw[thick] (makes) -- (order) node[near end, above] {\small N};
+    
+    \draw[thick] (worker) -- (executes) node[near start, right] {\small 1};
+    \draw[thick] (executes) -- (order) node[near end, right] {\small N};
+    
+    \draw[thick] (order) -- (includes) node[near start, above] {\small N};
+    \draw[thick] (includes) -- (service) node[near end, above] {\small M};
+    
+    \draw[thick] (order.south) -- (6,4.8) -- (3,4.8) -- (uses) node[near end, above] {\small N};
+    \draw[thick] (uses) -- (material) node[near end, above] {\small M};
+    
+    \draw[thick] (client.south) -- (0,6.5) -- (0,2.5) -- (has) node[near start, right] {\small 1};
+    \draw[thick] (has) -- (measurement) node[near end, right] {\small N};
+\end{tikzpicture}
+\caption{ER-діаграма бази даних}
+\end{figure}
+
+\subsubsection{Опис таблиць бази даних}
+
+\textbf{Таблиця CLIENT (Клієнти):}
+\begin{itemize}
+    \item client\_id (PK) --- унікальний ідентифікатор клієнта
+    \item first\_name --- ім'я
+    \item last\_name --- прізвище
+    \item phone --- номер телефону
+    \item email --- електронна пошта
+    \item registration\_date --- дата реєстрації
+    \item notes --- додаткові примітки
+\end{itemize}
+
+\textbf{Таблиця MEASUREMENT (Мірки):}
+\begin{itemize}
+    \item measurement\_id (PK) --- унікальний ідентифікатор
+    \item client\_id (FK) --- посилання на клієнта
+    \item chest --- обхват грудей
+    \item waist --- обхват талії
+    \item hips --- обхват стегон
+    \item height --- зріст
+    \item measurement\_date --- дата зняття мірок
+\end{itemize}
+
+\textbf{Таблиця WORKER (Працівники):}
+\begin{itemize}
+    \item worker\_id (PK) --- унікальний ідентифікатор
+    \item first\_name --- ім'я
+    \item last\_name --- прізвище
+    \item position --- посада
+    \item phone --- номер телефону
+    \item hire\_date --- дата прийняття на роботу
+    \item salary --- заробітна плата
+\end{itemize}
+
+\textbf{Таблиця SERVICE (Послуги):}
+\begin{itemize}
+    \item service\_id (PK) --- унікальний ідентифікатор
+    \item name --- назва послуги
+    \item description --- опис
+    \item base\_price --- базова ціна
+    \item duration\_hours --- тривалість виконання
+    \item category --- категорія послуги
+\end{itemize}
+
+\textbf{Таблиця ORDER (Замовлення):}
+\begin{itemize}
+    \item order\_id (PK) --- унікальний ідентифікатор
+    \item client\_id (FK) --- посилання на клієнта
+    \item worker\_id (FK) --- посилання на виконавця
+    \item order\_date --- дата оформлення
+    \item due\_date --- термін виконання
+    \item completion\_date --- дата завершення
+    \item status --- статус (новий, в роботі, готовий, виданий)
+    \item total\_price --- загальна вартість
+    \item notes --- примітки
+\end{itemize}
+
+\textbf{Таблиця ORDER\_ITEM (Позиції замовлення):}
+\begin{itemize}
+    \item order\_item\_id (PK) --- унікальний ідентифікатор
+    \item order\_id (FK) --- посилання на замовлення
+    \item service\_id (FK) --- посилання на послугу
+    \item quantity --- кількість
+    \item price --- ціна
+    \item description --- опис
+\end{itemize}
+
+\textbf{Таблиця MATERIAL (Матеріали):}
+\begin{itemize}
+    \item material\_id (PK) --- унікальний ідентифікатор
+    \item name --- назва матеріалу
+    \item unit --- одиниця виміру
+    \item price\_per\_unit --- ціна за одиницю
+    \item stock\_quantity --- кількість на складі
+    \item min\_stock\_level --- мінімальний рівень запасів
+    \item supplier --- постачальник
+\end{itemize}
+
+\textbf{Таблиця MATERIAL\_USAGE (Використання матеріалів):}
+\begin{itemize}
+    \item usage\_id (PK) --- унікальний ідентифікатор
+    \item order\_id (FK) --- посилання на замовлення
+    \item material\_id (FK) --- посилання на матеріал
+    \item quantity --- кількість використаного матеріалу
+    \item cost --- вартість
+    \item usage\_date --- дата використання
+\end{itemize}
+
+\newpage
+\subsection{Діаграма діяльності}
+
+Діаграма діяльності для процесу оформлення та виконання замовлення.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=1.3cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{startstop} = [ellipse, draw, thick, minimum width=2cm, minimum height=0.8cm]
+    \tikzstyle{process} = [rectangle, draw, thick, text width=3.5cm, text centered, minimum height=1cm]
+    \tikzstyle{decision} = [diamond, draw, thick, text width=2cm, text centered, aspect=2, inner sep=0pt]
+    \tikzstyle{arrow} = [thick, ->, >=stealth]
+    
+    % Вузли
+    \node[startstop] (start) {Початок};
+    \node[process, below of=start] (p1) {Прийом клієнта та консультація};
+    \node[process, below of=p1] (p2) {Зняття мірок клієнта};
+    \node[process, below of=p2] (p3) {Вибір послуги та матеріалів};
+    \node[process, below of=p3] (p4) {Розрахунок вартості};
+    \node[decision, below of=p4, yshift=-0.3cm] (d1) {Клієнт\\згоден?};
+    \node[process, below of=d1, yshift=-0.7cm] (p5) {Оформлення замовлення};
+    \node[process, below of=p5] (p6) {Призначення виконавця};
+    \node[process, below of=p6] (p7) {Виконання замовлення};
+    \node[process, below of=p7] (p8) {Примірка};
+    \node[decision, below of=p8, yshift=-0.3cm] (d2) {Потрібні\\зміни?};
+    \node[process, below of=d2, yshift=-0.7cm] (p9) {Видача замовлення};
+    \node[process, below of=p9] (p10) {Розрахунок з клієнтом};
+    \node[startstop, below of=p10] (end) {Кінець};
+    
+    \node[process, right of=d1, xshift=3.5cm] (p11) {Коригування умов};
+    \node[process, right of=d2, xshift=3.5cm] (p12) {Внесення змін};
+    
+    % Стрілки
+    \draw[arrow] (start) -- (p1);
+    \draw[arrow] (p1) -- (p2);
+    \draw[arrow] (p2) -- (p3);
+    \draw[arrow] (p3) -- (p4);
+    \draw[arrow] (p4) -- (d1);
+    \draw[arrow] (d1) -- node[right] {\small так} (p5);
+    \draw[arrow] (d1) -- node[above] {\small ні} (p11);
+    \draw[arrow] (p11.north) |- (p3.east);
+    \draw[arrow] (p5) -- (p6);
+    \draw[arrow] (p6) -- (p7);
+    \draw[arrow] (p7) -- (p8);
+    \draw[arrow] (p8) -- (d2);
+    \draw[arrow] (d2) -- node[right] {\small ні} (p9);
+    \draw[arrow] (d2) -- node[above] {\small так} (p12);
+    \draw[arrow] (p12.north) |- (p7.east);
+    \draw[arrow] (p9) -- (p10);
+    \draw[arrow] (p10) -- (end);
+\end{tikzpicture}
+\caption{Діаграма діяльності: процес оформлення та виконання замовлення}
+\end{figure}
+
+\newpage
+\subsection{Архітектура системи}
+
+Інформаційна система управління ательє побудована за трирівневою архітектурою:
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=2.5cm, scale=0.9, every node/.style={scale=0.9}]
+    \tikzstyle{layer} = [rectangle, draw, thick, text width=10cm, text centered, minimum height=1.8cm]
+    
+    \node[layer] (presentation) {
+        \textbf{Рівень представлення (Presentation Layer)}\\
+        \vspace{0.2cm}
+        Веб-інтерфейс / Десктоп додаток
+    };
+    
+    \node[layer, below of=presentation] (business) {
+        \textbf{Рівень бізнес-логіки (Business Logic Layer)}\\
+        \vspace{0.2cm}
+        Обробка замовлень, управління клієнтами, розрахунки, звіти
+    };
+    
+    \node[layer, below of=business] (data) {
+        \textbf{Рівень даних (Data Access Layer)}\\
+        \vspace{0.2cm}
+        База даних (MySQL / PostgreSQL)
+    };
+    
+    \draw[thick, <->, >=stealth] (presentation) -- (business);
+    \draw[thick, <->, >=stealth] (business) -- (data);
+\end{tikzpicture}
+\caption{Трирівнева архітектура системи}
+\end{figure}
+
+\textbf{Опис рівнів:}
+
+\begin{enumerate}
+    \item \textbf{Рівень представлення:} забезпечує взаємодію користувача з системою через графічний інтерфейс. Може бути реалізований як веб-додаток або десктоп-програма.
+    
+    \item \textbf{Рівень бізнес-логіки:} містить основну логіку роботи системи, обробляє запити користувачів, виконує валідацію даних, здійснює розрахунки та формує звіти.
+    
+    \item \textbf{Рівень даних:} відповідає за зберігання та отримання даних з бази даних, забезпечує цілісність та безпеку інформації.
+\end{enumerate}
+
+\subsubsection{Діаграма компонентів}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=2cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{component} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
+    
+    % Компоненти інтерфейсу
+    \node[component] (ui1) at (0,7) {Модуль\\керування\\клієнтами};
+    \node[component] (ui2) at (3.5,7) {Модуль\\замовлень};
+    \node[component] (ui3) at (7,7) {Модуль\\складу};
+    \node[component] (ui4) at (10.5,7) {Модуль\\звітів};
+    
+    % Бізнес-логіка
+    \node[component] (bl1) at (1.75,4) {Обробка\\замовлень};
+    \node[component] (bl2) at (5.25,4) {Управління\\даними};
+    \node[component] (bl3) at (8.75,4) {Формування\\звітів};
+    
+    % Доступ до даних
+    \node[component, text width=6cm] (dal) at (5.25,1.5) {Рівень доступу до даних (DAL)};
+    
+    % База даних
+    \node[component, text width=6cm] (db) at (5.25,-1) {База даних};
+    
+    % Зв'язки
+    \draw[thick, ->] (ui1) -- (bl1);
+    \draw[thick, ->] (ui2) -- (bl1);
+    \draw[thick, ->] (ui2) -- (bl2);
+    \draw[thick, ->] (ui3) -- (bl2);
+    \draw[thick, ->] (ui4) -- (bl3);
+    
+    \draw[thick, ->] (bl1) -- (dal);
+    \draw[thick, ->] (bl2) -- (dal);
+    \draw[thick, ->] (bl3) -- (dal);
+    
+    \draw[thick, <->, >=stealth] (dal) -- (db);
+\end{tikzpicture}
+\caption{Діаграма компонентів системи}
+\end{figure}
+
+\newpage
+\subsection{Діаграма послідовності}
+
+Діаграма послідовності для процесу створення нового замовлення.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[scale=0.9, every node/.style={scale=0.8}]
+    \tikzstyle{object} = [rectangle, draw, thick, text width=2.2cm, text centered, minimum height=0.8cm]
+    
+    % Об'єкти
+    \node[object] (admin) at (0,0) {Адміністратор};
+    \node[object] (ui) at (3,0) {UI};
+    \node[object] (controller) at (6,0) {Controller};
+    \node[object] (service) at (9,0) {Service};
+    \node[object] (db) at (12,0) {Database};
+    
+    % Лінії життя
+    \draw[dashed, thick] (admin) -- (0,-14);
+    \draw[dashed, thick] (ui) -- (3,-14);
+    \draw[dashed, thick] (controller) -- (6,-14);
+    \draw[dashed, thick] (service) -- (9,-14);
+    \draw[dashed, thick] (db) -- (12,-14);
+    
+    % Повідомлення
+    \draw[->, thick] (0,-1) -- node[above, sloped] {\tiny введення даних} (3,-1.8);
+    
+    \draw[->, thick] (3,-2.2) -- node[above, sloped] {\tiny createOrder()} (6,-3);
+    
+    \draw[->, thick] (6,-3.4) -- node[above, sloped] {\tiny validateData()} (9,-4.2);
+    \draw[<-, thick] (6,-4.6) -- node[below, sloped] {\tiny valid} (9,-4.6);
+    
+    \draw[->, thick] (6,-5.2) -- node[above, sloped] {\tiny getClient(id)} (9,-6);
+    \draw[->, thick] (9,-6.4) -- node[above, sloped] {\tiny SELECT} (12,-7.2);
+    \draw[<-, thick] (9,-7.6) -- node[below, sloped] {\tiny clientData} (12,-7.6);
+    \draw[<-, thick] (6,-8) -- node[below, sloped] {\tiny client} (9,-8);
+    
+    \draw[->, thick] (6,-8.6) -- node[above, sloped] {\tiny saveOrder()} (9,-9.4);
+    \draw[->, thick] (9,-9.8) -- node[above, sloped] {\tiny INSERT} (12,-10.6);
+    \draw[<-, thick] (9,-11) -- node[below, sloped] {\tiny orderId} (12,-11);
+    \draw[<-, thick] (6,-11.4) -- node[below, sloped] {\tiny success} (9,-11.4);
+    
+    \draw[<-, thick] (3,-12) -- node[below, sloped] {\tiny orderCreated} (6,-12);
+    \draw[<-, thick] (0,-12.8) -- node[below, sloped] {\tiny підтвердження} (3,-13.4);
+\end{tikzpicture}
+\caption{Діаграма послідовності: створення замовлення}
+\end{figure}
+
+\newpage
+\subsection{Діаграма станів}
+
+Діаграма станів для сутності "Замовлення" відображає можливі стани замовлення та переходи між ними.
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=2.8cm, auto, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{state} = [rectangle, rounded corners, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
+    \tikzstyle{initial} = [circle, draw, thick, fill=black, minimum size=0.4cm]
+    \tikzstyle{final} = [circle, draw, thick, double, minimum size=0.6cm]
+    
+    % Стани
+    \node[initial] (init) {};
+    \node[state] (new) [right of=init, xshift=-1cm] {Новий};
+    \node[state] (accepted) [below of=new] {Прийнято\\в роботу};
+    \node[state] (inprogress) [right of=accepted, xshift=1.5cm] {В процесі\\виконання};
+    \node[state] (fitting) [below of=accepted] {Примірка};
+    \node[state] (ready) [right of=fitting, xshift=1.5cm] {Готовий};
+    \node[state] (completed) [below of=fitting] {Виданий};
+    \node[state] (cancelled) [left of=fitting, xshift=-1.5cm] {Скасовано};
+    \node[final] (end) [below of=completed] {};
+    
+    % Переходи
+    \draw[->, thick, >=stealth] (init) -- (new);
+    \draw[->, thick, >=stealth] (new) -- node[right] {\tiny призначити} (accepted);
+    \draw[->, thick, >=stealth] (accepted) -- node[above] {\tiny почати} (inprogress);
+    \draw[->, thick, >=stealth] (inprogress) -- node[right] {\tiny завершити} (fitting);
+    \draw[->, thick, >=stealth] (fitting) -- node[above] {\tiny OK} (ready);
+    \draw[->, thick, >=stealth] (fitting.east) .. controls +(right:1.5cm) and +(right:1.5cm) .. node[right] {\tiny зміни} (inprogress.east);
+    \draw[->, thick, >=stealth] (ready) -- (completed);
+    \draw[->, thick, >=stealth] (completed) -- (end);
+    \draw[->, thick, >=stealth] (new) -- node[above] {\tiny скасувати} (cancelled);
+    \draw[->, thick, >=stealth] (accepted) -- (cancelled);
+    \draw[->, thick, >=stealth] (cancelled) -- (end);
+\end{tikzpicture}
+\caption{Діаграма станів замовлення}
+\end{figure}
+
+\textbf{Опис станів:}
+\begin{itemize}
+    \item \textbf{Новий} --- замовлення створено, але ще не прийнято в роботу;
+    \item \textbf{Прийнято в роботу} --- замовлення призначено виконавцю;
+    \item \textbf{В процесі виконання} --- виконавець працює над замовленням;
+    \item \textbf{Примірка} --- клієнт проводить примірку виробу;
+    \item \textbf{Готовий} --- виріб готовий до видачі;
+    \item \textbf{Виданий} --- замовлення видано клієнту;
+    \item \textbf{Скасовано} --- замовлення скасовано клієнтом або адміністратором.
+\end{itemize}
+
+\newpage
+\section{РЕАЛІЗАЦІЯ СИСТЕМИ}
+
+\subsection{Технології та інструменти}
+
+Для реалізації інформаційної системи управління ательє пропонується використовувати наступний стек технологій:
+
+\textbf{Backend (серверна частина):}
+\begin{itemize}
+    \item Мова програмування: Java / Python / C\#
+    \item Фреймворк: Spring Boot / Django / ASP.NET Core
+    \item ORM: Hibernate / Django ORM / Entity Framework
+    \item База даних: PostgreSQL / MySQL
+\end{itemize}
+
+\textbf{Frontend (клієнтська частина):}
+\begin{itemize}
+    \item HTML5, CSS3, JavaScript
+    \item Фреймворк: React / Angular / Vue.js
+    \item UI-бібліотека: Material-UI / Bootstrap
+\end{itemize}
+
+\textbf{Інструменти розробки:}
+\begin{itemize}
+    \item Система контролю версій: Git
+    \item IDE: IntelliJ IDEA / Visual Studio Code / PyCharm
+    \item Інструменти для тестування: JUnit / pytest / NUnit
+    \item Документування API: Swagger / OpenAPI
+\end{itemize}
+
+\subsection{Структура проекту}
+
+Приклад структури проекту для веб-додатку:
+
+\begin{verbatim}
+atelier-system/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/      # Контролери
+│   │   ├── models/           # Моделі даних
+│   │   ├── services/         # Бізнес-логіка
+│   │   ├── repositories/     # Робота з БД
+│   │   └── config/           # Конфігурація
+│   └── tests/                # Тести
+├── frontend/
+│   ├── src/
+│   │   ├── components/       # React компоненти
+│   │   ├── pages/            # Сторінки
+│   │   ├── services/         # API сервіси
+│   │   └── utils/            # Утиліти
+│   └── public/               # Статичні файли
+└── database/
+    ├── migrations/           # Міграції БД
+    └── seeds/                # Початкові дані
+\end{verbatim}
+
+\newpage
+\subsection{SQL-скрипти створення таблиць}
+
+\begin{lstlisting}[language=SQL, caption=Створення таблиць бази даних, basicstyle=\small\ttfamily, breaklines=true, frame=single]
+-- Tablycya klientiv
+CREATE TABLE client (
+    client_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20),
+    email VARCHAR(100),
+    registration_date DATE DEFAULT CURRENT_DATE,
+    notes TEXT
+);
+
+-- Tablycya mirok
+CREATE TABLE measurement (
+    measurement_id SERIAL PRIMARY KEY,
+    client_id INTEGER REFERENCES client(client_id),
+    chest DECIMAL(5,2),
+    waist DECIMAL(5,2),
+    hips DECIMAL(5,2),
+    height DECIMAL(5,2),
+    measurement_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Tablycya pratsivnykiv
+CREATE TABLE worker (
+    worker_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    position VARCHAR(50),
+    phone VARCHAR(20),
+    hire_date DATE,
+    salary DECIMAL(10,2)
+);
+
+-- Tablycya posluh
+CREATE TABLE service (
+    service_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    base_price DECIMAL(10,2),
+    duration_hours INTEGER,
+    category VARCHAR(50)
+);
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[language=SQL, caption=Продовження створення таблиць, basicstyle=\small\ttfamily, breaklines=true, frame=single]
+-- Tablycya zamovlen
+CREATE TABLE "order" (
+    order_id SERIAL PRIMARY KEY,
+    client_id INTEGER REFERENCES client(client_id),
+    worker_id INTEGER REFERENCES worker(worker_id),
+    order_date DATE DEFAULT CURRENT_DATE,
+    due_date DATE,
+    completion_date DATE,
+    status VARCHAR(20) DEFAULT 'new',
+    total_price DECIMAL(10,2),
+    notes TEXT
+);
+
+-- Tablycya pozytsiy zamovlennya
+CREATE TABLE order_item (
+    order_item_id SERIAL PRIMARY KEY,
+    order_id INTEGER REFERENCES "order"(order_id),
+    service_id INTEGER REFERENCES service(service_id),
+    quantity INTEGER DEFAULT 1,
+    price DECIMAL(10,2),
+    description TEXT
+);
+
+-- Tablycya materialiv
+CREATE TABLE material (
+    material_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    unit VARCHAR(20),
+    price_per_unit DECIMAL(10,2),
+    stock_quantity DECIMAL(10,2),
+    min_stock_level DECIMAL(10,2),
+    supplier VARCHAR(100)
+);
+
+-- Tablycya vykorystannya materialiv
+CREATE TABLE material_usage (
+    usage_id SERIAL PRIMARY KEY,
+    order_id INTEGER REFERENCES "order"(order_id),
+    material_id INTEGER REFERENCES material(material_id),
+    quantity DECIMAL(10,2),
+    cost DECIMAL(10,2),
+    usage_date DATE DEFAULT CURRENT_DATE
+);
+\end{lstlisting}
+
+\newpage
+\subsection{Приклади коду}
+
+\textbf{Клас Order (Java):}
+
+\begin{lstlisting}[language=Java, caption=Клас Order, basicstyle=\small\ttfamily, breaklines=true, frame=single]
+public class Order {
+    private int orderId;
+    private int clientId;
+    private int workerId;
+    private LocalDate orderDate;
+    private LocalDate dueDate;
+    private LocalDate completionDate;
+    private OrderStatus status;
+    private BigDecimal totalPrice;
+    private String notes;
+    
+    public enum OrderStatus {
+        NEW, ACCEPTED, IN_PROGRESS, FITTING, 
+        READY, COMPLETED, CANCELLED
+    }
+    
+    public BigDecimal calculateTotalPrice(
+        List<OrderItem> items, 
+        List<MaterialUsage> materials) {
+        
+        BigDecimal total = BigDecimal.ZERO;
+        
+        for (OrderItem item : items) {
+            total = total.add(
+                item.getPrice().multiply(
+                    new BigDecimal(item.getQuantity())
+                )
+            );
+        }
+        
+        for (MaterialUsage material : materials) {
+            total = total.add(material.getCost());
+        }
+        
+        return total;
+    }
+    
+    public void updateStatus(OrderStatus newStatus) {
+        if (this.status == OrderStatus.COMPLETED || 
+            this.status == OrderStatus.CANCELLED) {
+            throw new IllegalStateException(
+                "Cannot change completed order status"
+            );
+        }
+        this.status = newStatus;
+        
+        if (newStatus == OrderStatus.COMPLETED) {
+            this.completionDate = LocalDate.now();
+        }
+    }
+}
+\end{lstlisting}
+
+\newpage
+\section{ТЕСТУВАННЯ ТА ВПРОВАДЖЕННЯ}
+
+\subsection{План тестування}
+
+Тестування інформаційної системи включає наступні етапи:
+
+\begin{enumerate}
+    \item \textbf{Модульне тестування (Unit Testing):}
+    \begin{itemize}
+        \item Тестування окремих методів та функцій
+        \item Перевірка коректності обчислень
+        \item Валідація вхідних даних
+    \end{itemize}
+    
+    \item \textbf{Інтеграційне тестування:}
+    \begin{itemize}
+        \item Тестування взаємодії між модулями
+        \item Перевірка роботи з базою даних
+        \item Тестування API endpoints
+    \end{itemize}
+    
+    \item \textbf{Системне тестування:}
+    \begin{itemize}
+        \item Тестування повного функціоналу системи
+        \item Перевірка бізнес-процесів
+        \item Тестування продуктивності
+    \end{itemize}
+    
+    \item \textbf{Приймальне тестування:}
+    \begin{itemize}
+        \item Тестування користувачами
+        \item Перевірка відповідності вимогам
+        \item Виявлення зауважень
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Приклади тестових сценаріїв}
+
+\textbf{Тестовий сценарій 1: Створення нового замовлення}
+
+\begin{enumerate}
+    \item Адміністратор входить в систему
+    \item Вибирає клієнта зі списку або створює нового
+    \item Додає послуги до замовлення
+    \item Вказує необхідні матеріали
+    \item Система розраховує загальну вартість
+    \item Адміністратор вказує термін виконання
+    \item Система зберігає замовлення
+    \item Очікуваний результат: замовлення створено, статус "Новий"
+\end{enumerate}
+
+\textbf{Тестовий сценарій 2: Відстеження виконання замовлення}
+
+\begin{enumerate}
+    \item Кравець входить в систему
+    \item Переглядає список своїх замовлень
+    \item Вибирає замовлення в роботі
+    \item Оновлює статус на "В процесі виконання"
+    \item Після завершення змінює статус на "Готовий"
+    \item Очікуваний результат: статус оновлено, клієнт може бути повідомлений
+\end{enumerate}
+
+\subsection{Впровадження системи}
+
+Етапи впровадження:
+
+\begin{enumerate}
+    \item \textbf{Підготовчий етап:}
+    \begin{itemize}
+        \item Налаштування серверного обладнання
+        \item Встановлення програмного забезпечення
+        \item Створення бази даних
+    \end{itemize}
+    
+    \item \textbf{Міграція даних:}
+    \begin{itemize}
+        \item Перенесення існуючих даних про клієнтів
+        \item Імпорт каталогу послуг
+        \item Завантаження довідників
+    \end{itemize}
+    
+    \item \textbf{Навчання персоналу:}
+    \begin{itemize}
+        \item Проведення тренінгів для адміністраторів
+        \item Навчання кравців роботі з системою
+        \item Підготовка інструкцій користувача
+    \end{itemize}
+    
+    \item \textbf{Пілотний запуск:}
+    \begin{itemize}
+        \item Робота в тестовому режимі
+        \item Виявлення та усунення помилок
+        \item Збір зворотного зв'язку
+    \end{itemize}
+    
+    \item \textbf{Промислова експлуатація:}
+    \begin{itemize}
+        \item Повний перехід на нову систему
+        \item Технічна підтримка
+        \item Моніторинг роботи системи
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+\section{ВИСНОВКИ}
+
+В результаті виконання курсової роботи була розроблена інформаційна система управління ательє, яка дозволяє автоматизувати основні бізнес-процеси підприємства.
+
+\textbf{Основні результати роботи:}
+
+\begin{enumerate}
+    \item Проведено аналіз предметної області та виявлено основні бізнес-процеси ательє, що потребують автоматизації.
+    
+    \item Визначено функціональні вимоги до інформаційної системи, які включають управління клієнтами, замовленнями, матеріалами, персоналом та формування звітності.
+    
+    \item Розроблено діаграму прецедентів, що відображає взаємодію трьох типів користувачів з системою: клієнта, адміністратора та кравця.
+    
+    \item Створено діаграму класів, яка описує структуру системи та зв'язки між основними сутностями.
+    
+    \item Спроектовано модель бази даних, що складається з 8 таблиць та забезпечує зберігання всієї необхідної інформації.
+    
+    \item Розроблено діаграму діяльності для процесу оформлення та виконання замовлення, що демонструє послідовність дій.
+    
+    \item Описано трирівневу архітектуру системи, яка забезпечує розділення відповідальності та масштабованість.
+    
+    \item Розроблено діаграму станів для сутності "Замовлення", що визначає життєвий цикл замовлення.
+    
+    \item Підготовлено SQL-скрипти для створення таблиць бази даних та приклади коду основних класів.
+\end{enumerate}
+
+\textbf{Переваги розробленої системи:}
+
+\begin{itemize}
+    \item Автоматизація обліку клієнтів та їх замовлень
+    \item Спрощення процесу оформлення та відстеження замовлень
+    \item Контроль витрачання матеріалів та складських залишків
+    \item Ефективний розподіл навантаження між працівниками
+    \item Можливість формування аналітичних звітів
+    \item Покращення якості обслуговування клієнтів
+    \item Підвищення продуктивності роботи ательє
+\end{itemize}
+
+\textbf{Перспективи подальшого розвитку:}
+
+\begin{itemize}
+    \item Додавання мобільного додатку для клієнтів
+    \item Інтеграція з онлайн-оплатою
+    \item Впровадження системи лояльності для постійних клієнтів
+    \item Додавання модуля для роботи з постачальниками
+    \item Інтеграція з бухгалтерськими системами
+    \item Впровадження аналітики на основі машинного навчання для прогнозування попиту
+\end{itemize}
+
+Розроблена інформаційна система є повноцінним інструментом для управління ательє та може бути впроваджена на підприємствах різного масштабу.
+
+\newpage
+\section{СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}
+
+\begin{enumerate}
+    \item Гамма Э., Хелм Р., Джонсон Р., Влиссидес Дж. Приемы объектно-ориентированного проектирования. Паттерны проектирования. --- СПб.: Питер, 2020. --- 368 с.
+    
+    \item Фаулер М. UML. Основы. --- 3-е изд. --- СПб.: Символ-Плюс, 2019. --- 192 с.
+    
+    \item Коннолли Т., Бегг К. Базы данных. Проектирование, реализация и сопровождение. Теория и практика. --- 3-е изд. --- М.: Вильямс, 2018. --- 1440 с.
+    
+    \item Буч Г., Рамбо Дж., Джекобсон А. Язык UML. Руководство пользователя. --- 2-е изд. --- М.: ДМК Пресс, 2019. --- 496 с.
+    
+    \item Вендров А.М. Проектирование программного обеспечения экономических информационных систем. --- М.: Финансы и статистика, 2018. --- 544 с.
+    
+    \item ДСТУ 3008-95. Документація. Звіти у сфері науки і техніки. Структура і правила оформлення. --- К.: Держстандарт України, 1995.
+    
+    \item Офіційна документація PostgreSQL [Електронний ресурс]. --- Режим доступу: https://www.postgresql.org/docs/
+    
+    \item Офіційна документація Spring Framework [Електронний ресурс]. --- Режим доступу: https://spring.io/projects/spring-framework
+    
+    \item Sommerville I. Software Engineering. --- 10th ed. --- Pearson, 2019. --- 816 p.
+    
+    \item Pressman R.S., Maxim B.R. Software Engineering: A Practitioner's Approach. --- 9th ed. --- McGraw-Hill Education, 2020. --- 976 p.
+\end{enumerate}
+
+\newpage
+\appendix
+\section{ДОДАТОК А. Діаграма розгортання}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=2.5cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{node} = [rectangle, draw, thick, text width=3.2cm, text centered, minimum height=1.5cm]
+    \tikzstyle{component} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=0.8cm]
+    
+    % Вузли
+    \node[node] (client) {
+        \textbf{Клієнтський}\\
+        \textbf{комп'ютер}\\
+        \vspace{0.1cm}
+        \small{Windows/Linux}
+    };
+    
+    \node[node, below of=client, yshift=-0.5cm] (webserver) {
+        \textbf{Веб-сервер}\\
+        \vspace{0.1cm}
+        \small{Apache/Nginx}
+    };
+    
+    \node[node, left of=webserver, xshift=-2cm] (appserver) {
+        \textbf{Сервер додатків}\\
+        \vspace{0.1cm}
+        \small{Tomcat/Node.js}
+    };
+    
+    \node[node, right of=webserver, xshift=2cm] (dbserver) {
+        \textbf{Сервер БД}\\
+        \vspace{0.1cm}
+        \small{PostgreSQL}
+    };
+    
+    % Компоненти
+    \node[component, below of=client, yshift=1.3cm] (browser) {Веб-браузер};
+    \node[component, below of=webserver, yshift=1.3cm] (frontend) {Frontend};
+    \node[component, below of=appserver, yshift=1.3cm] (backend) {Backend API};
+    \node[component, below of=dbserver, yshift=1.3cm] (database) {База даних};
+    
+    % Зв'язки
+    \draw[thick, <->, >=stealth] (client) -- node[right] {\small HTTP/HTTPS} (webserver);
+    \draw[thick, <->, >=stealth] (webserver) -- node[above] {\small REST API} (appserver);
+    \draw[thick, <->, >=stealth] (appserver) -- node[above] {\small SQL} (dbserver);
+\end{tikzpicture}
+\caption{Діаграма розгортання системи}
+\end{figure}
+
+\section{ДОДАТОК Б. Словник термінів}
+
+\begin{itemize}
+    \item \textbf{Ательє} --- підприємство, що надає послуги з пошиття та ремонту одягу
+    \item \textbf{API} (Application Programming Interface) --- інтерфейс програмування додатків
+    \item \textbf{Backend} --- серверна частина додатку
+    \item \textbf{Frontend} --- клієнтська частина додатку
+    \item \textbf{CRUD} --- Create, Read, Update, Delete (базові операції з даними)
+    \item \textbf{ER-діаграма} --- діаграма "сутність-зв'язок"
+    \item \textbf{ORM} (Object-Relational Mapping) --- об'єктно-реляційне відображення
+    \item \textbf{REST} (Representational State Transfer) --- архітектурний стиль для веб-сервісів
+    \item \textbf{SQL} (Structured Query Language) --- мова структурованих запитів
+    \item \textbf{UML} (Unified Modeling Language) --- уніфікована мова моделювання
+\end{itemize}
+
+\end{document}
