@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2025/dev/Debian) (preloaded format=xelatex 2025.10.24)  24 OCT 2025 08:13
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2025/dev/Debian) (preloaded format=xelatex 2025.10.24)  24 OCT 2025 08:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1378,17 +1378,19 @@ Package: inputenc 2024/02/08 v1.3d Input encoding file
 
 [1
 
-] (./kursova-atelie.toc)
+] (./kursova-atelie.toc
+
+[2
+
+])
 \tf@toc=\write5
 \openout5 = `kursova-atelie.toc'.
 
 
 
-[2
+[3]
 
-]
-
-[3
+[4
 
 ]
 Overfull \hbox (6.4897pt too wide) in paragraph at lines 128--129
@@ -1659,18 +1661,222 @@ Overfull \hbox (115.66777pt too wide) in alignment at lines 354--358
  [] [] [] [] 
  []
 
-! Extra alignment tab has been changed to \cr.
-<template> ...egin \relax \d@llarend \endtemplate 
-                                                  
-l.361 NFR-3 & Безпека &
-                        Паролі хешуються (Argon2/BCrypt); JWT; ролева автори...
- 
+
+Overfull \hbox (2.24968pt too wide) in paragraph at lines 363--364
+[]|\TU/CMUSerif(1)/m/n/14.4 Середній| 
+ []
+
+
+Overfull \hbox (2.24968pt too wide) in paragraph at lines 364--365
+[]|\TU/CMUSerif(1)/m/n/14.4 Середній| 
+ []
+
+
+Overfull \hbox (2.24968pt too wide) in paragraph at lines 365--366
+[]|\TU/CMUSerif(1)/m/n/14.4 Середній| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--366
+[]|\TU/CMUSerif(1)/m/n/14.4 Підтримка останніх версій
+ []
+
+
+Overfull \hbox (2.24968pt too wide) in paragraph at lines 366--367
+[]|\TU/CMUSerif(1)/m/n/14.4 Середній| 
+ []
+
+
+Overfull \hbox (115.66777pt too wide) in alignment at lines 358--370
+ [] [] [] [] 
+ []
+
+[8]
+
+[9]
+Overfull \hbox (247.78786pt too wide) in alignment at lines 384--388
+ [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (247.78786pt too wide) in alignment at lines 388--392
+ [] [] [] [] [] [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--393
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Underfull \hbox (badness 1226) in paragraph at lines 395--396
+[]|\TU/CMUSerif(1)/m/n/14.4 Контактний телефон у міжнаро-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 401--401
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 412--412
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 418--418
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
+[]|\TU/CMUSerif(1)/m/n/14.4 TEXT
+ []
+
+
+Overfull \hbox (3.7834pt too wide) in paragraph at lines 430--431
+[]|\TU/CMUSerif(1)/m/n/14.4 Дія (CREATE/UPDATE/DELETE).| 
+ []
+
+
+Overfull \hbox (247.78786pt too wide) in alignment at lines 392--434
+ [] [] [] [] [] [] 
+ []
+
+[10
+
+]
+Overfull \hbox (75.29655pt too wide) in paragraph at lines 437--438
+\TU/CMUSerif(1)/m/n/14.4 Схема відповідає щонайменше 3НФ: довідники винесено ок
+ремо, []
+ []
+
+
+
+[11]
+Missing character: There is no ; ("3B) in font nullfont!
+
+Overfull \hbox (121.10042pt too wide) in paragraph at lines 457--458
+ [][] 
+ []
+
+Missing character: There is no ; ("3B) in font nullfont!
+
+Overfull \hbox (110.19914pt too wide) in paragraph at lines 473--474
+ [][] 
+ []
+
+
+
+[12
+
+]
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 1 ("31) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 2 ("32) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 3 ("33) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 5 ("35) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no - ("2D) in font nullfont!
+Missing character: There is no 0 ("30) in font nullfont!
+Missing character: There is no 6 ("36) in font nullfont!
+Missing character: There is no , ("2C) in font nullfont!
+
+
+[13
+
+]
+Package pgfplots info on input line 511: Using 'lua backend=false' for axis: x 
+coord trafo unsupported.
+Package pgfplots info on input line 533: Using 'lua backend=false' for axis: st
+acked plots unsupported (yet).
+Package pgfplots info on input line 533: Using 'lua backend=false' for axis: x 
+coord trafo unsupported.
+
+
+[14
+
+]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 550.
+
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+
+
+[15
+
+]
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+
+
+[16]
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+
+
+[17] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+
+
+[18]
+Package pgfplots info on input line 718: Using 'lua backend=false' for axis: x 
+coord trafo unsupported.
+
+
+[19]
+
+[20]
+
+[21] (./kursova-atelie.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+ ***********
+Package rerunfilecheck Info: File `kursova-atelie.out' has not changed.
+(rerunfilecheck)             Checksum: EAE1CB7D2DCBA00D30E833C977405D11;7966.
+ ) 
 Here is how much of TeX's memory you used:
- 41706 strings out of 474542
- 1011752 string characters out of 5752409
- 1597256 words of memory out of 5000000
- 64001 multiletter control sequences out of 15000+600000
- 560889 words of font info for 83 fonts, out of 8000000 for 9000
+ 43009 strings out of 474542
+ 1039411 string characters out of 5752409
+ 1906905 words of memory out of 5000000
+ 65295 multiletter control sequences out of 15000+600000
+ 560921 words of font info for 87 fonts, out of 8000000 for 9000
  1018 hyphenation exceptions out of 8191
- 84i,8n,93p,752b,838s stack positions out of 10000i,1000n,20000p,200000b,200000s
-Output written on kursova-atelie.pdf (10 pages).
+ 84i,17n,93p,752b,2352s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on kursova-atelie.pdf (25 pages).
