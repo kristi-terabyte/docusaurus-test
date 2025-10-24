@@ -36,6 +36,37 @@
 \usepackage{csquotes}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes,shapes.geometric,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{pgf-pie}
+\usepackage{listings}
+\usepackage{listingsutf8}
+
+% Listings setup for C# and SQL
+\lstdefinelanguage{CSharp}{
+  morekeywords={abstract,event,new,struct,as,explicit,null,switch,base,extern,object,this,bool,false,operator,throw,break,finally,out,true,byte,fixed,override,try,case,float,params,typeof,catch,for,private,uint,char,foreach,protected,ulong,checked,goto,public,unchecked,class,if,readonly,unsafe,const,implicit,ref,ushort,continue,in,return,using,decimal,int,sbyte,virtual,default,interface,sealed,volatile,delegate,internal,short,void,do,is,sizeof,while,double,lock,stackalloc,else,long,static,enum,namespace,string},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"
+}
+
+\lstdefinestyle{code}{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=6pt,
+  frame=single,
+  showstringspaces=false,
+  breaklines=true,
+  tabsize=2,
+  columns=fullflexible,
+}
+\lstset{style=code,inputencoding=utf8}
 
 % Title page variables (edit as needed)
 \newcommand{\University}{Назва закладу вищої освіти}
@@ -271,8 +302,195 @@ API — прикладний програмний інтерфейс; БД — �
 \section{Реалізація}
 Програмна реалізація може бути виконана у вигляді веб-додатка з архітектурою клієнт–сервер. Клієнтська частина (наприклад, React) взаємодіє з серверним REST API (наприклад, Node.js/Express, Java Spring або Python FastAPI), дані зберігаються у реляційній СУБД (PostgreSQL/MySQL). Аутентифікація може базуватися на JWT, авторизація — на ролях.
 
+\subsection{Фрагменти коду C\#}
+\subsubsection*{DTO та моделі}
+\begin{lstlisting}[language=CSharp,caption={Моделі домену для ательє}]
+public sealed class Client
+{
+    public Guid Id { get; init; }
+    public string FullName { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+}
+
+public enum OrderStatus
+{
+    New,
+    InProgress,
+    Ready,
+    Delivered,
+    Cancelled
+}
+
+public sealed class Order
+{
+    public Guid Id { get; init; }
+    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public OrderStatus Status { get; set; } = OrderStatus.New;
+    public decimal Total { get; set; }
+    public Guid ClientId { get; init; }
+}
+
+public sealed class Service
+{
+    public Guid Id { get; init; }
+    public string Title { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+}
+\end{lstlisting}
+
+\subsubsection*{Робота зі SQLite (ADO.NET)}
+\begin{lstlisting}[language=CSharp,caption={Ініціалізація SQLite та запити}]
+using System.Data;
+using Microsoft.Data.Sqlite; // dotnet add package Microsoft.Data.Sqlite
+
+const string ConnectionString = "Data Source=atelier.db";
+
+using var connection = new SqliteConnection(ConnectionString);
+await connection.OpenAsync();
+
+// Створення таблиць
+var createSql = @"
+CREATE TABLE IF NOT EXISTS Client (
+  Id TEXT PRIMARY KEY,
+  FullName TEXT NOT NULL,
+  Phone TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Service (
+  Id TEXT PRIMARY KEY,
+  Title TEXT NOT NULL,
+  Price REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS [Order] (
+  Id TEXT PRIMARY KEY,
+  Date TEXT NOT NULL,
+  Status INTEGER NOT NULL,
+  Total REAL NOT NULL,
+  ClientId TEXT NOT NULL REFERENCES Client(Id)
+);
+";
+await new SqliteCommand(createSql, connection).ExecuteNonQueryAsync();
+
+// Вставка клієнта параметризовано
+var insertClient = new SqliteCommand(
+    "INSERT INTO Client (Id, FullName, Phone) VALUES ($id, $name, $phone)", connection);
+insertClient.Parameters.AddWithValue("$id", Guid.NewGuid().ToString());
+insertClient.Parameters.AddWithValue("$name", "Іван Петренко");
+insertClient.Parameters.AddWithValue("$phone", "+380501112233");
+await insertClient.ExecuteNonQueryAsync();
+
+// Вибірка з мапінгом у об'єкти
+var clients = new List<Client>();
+var select = new SqliteCommand("SELECT Id, FullName, Phone FROM Client", connection);
+using (var reader = await select.ExecuteReaderAsync(CommandBehavior.CloseConnection))
+{
+    while (await reader.ReadAsync())
+    {
+        clients.Add(new Client
+        {
+            Id = Guid.Parse(reader.GetString(0)),
+            FullName = reader.GetString(1),
+            Phone = reader.GetString(2)
+        });
+    }
+}
+\end{lstlisting}
+
+\subsubsection*{Мінімальний Web API (.NET)}
+\begin{lstlisting}[language=CSharp,caption={Мінімальний ендпойнт для замовлень}]
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/orders", async () =>
+{
+    using var connection = new SqliteConnection("Data Source=atelier.db");
+    await connection.OpenAsync();
+    using var cmd = new SqliteCommand("SELECT Id, Date, Status, Total, ClientId FROM [Order]", connection);
+    var list = new List<Order>();
+    using var reader = await cmd.ExecuteReaderAsync();
+    while (await reader.ReadAsync())
+    {
+        list.Add(new Order
+        {
+            Id = Guid.Parse(reader.GetString(0)),
+            Date = DateOnly.Parse(reader.GetString(1)),
+            Status = (OrderStatus)reader.GetInt32(2),
+            Total = (decimal)reader.GetDouble(3),
+            ClientId = Guid.Parse(reader.GetString(4))
+        });
+    }
+    return Results.Ok(list);
+});
+
+app.Run();
+\end{lstlisting}
+
+\subsection{SQL (SQLite) схеми та запити}
+\begin{lstlisting}[language=SQL,caption={DDL і базові запити для SQLite}]
+-- Створення таблиць
+CREATE TABLE IF NOT EXISTS Client (
+  Id TEXT PRIMARY KEY,
+  FullName TEXT NOT NULL,
+  Phone TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Service (
+  Id TEXT PRIMARY KEY,
+  Title TEXT NOT NULL,
+  Price REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS [Order] (
+  Id TEXT PRIMARY KEY,
+  Date TEXT NOT NULL,
+  Status INTEGER NOT NULL,
+  Total REAL NOT NULL,
+  ClientId TEXT NOT NULL REFERENCES Client(Id)
+);
+
+-- Топ-5 популярних послуг
+SELECT s.Title, COUNT(*) AS Times
+FROM [Order] o
+JOIN OrderItem oi ON oi.OrderId = o.Id
+JOIN Service s ON s.Id = oi.ServiceId
+GROUP BY s.Title
+ORDER BY Times DESC
+LIMIT 5;
+\end{lstlisting}
+
 \section{Тестування}
 Запропоновано рівні тестування: модульне (сервісні методи калькуляції, валідації), інтеграційне (взаємодія API та БД), системне (сценарії оформлення замовлення, оплати), приймальне (з користувачами). Для нефункціональних аспектів — навантажувальне тестування ключових ендпойнтів.
+
+\subsection{Статистичні графіки}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ybar, bar width=14pt,
+      ymin=0,
+      ylabel={Кількість замовлень},
+      symbolic x coords={Січ,Лют,Бер,Кві,Тра,Чер},
+      xtick=data,
+      width=0.9\textwidth,height=6cm,
+      nodes near coords
+    ]
+      \addplot coordinates {(Січ,18) (Лют,22) (Бер,28) (Кві,32) (Тра,30) (Чер,35)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Динаміка замовлень за півріччя}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \pie[radius=2.6, text=legend, color={blue!60,orange!70!yellow,green!60,red!60}]{
+      40/Пошиття,
+      25/Ремонт,
+      20/Підгонка,
+      15/Інше
+    }
+  \end{tikzpicture}
+  \caption{Розподіл типів послуг}
+\end{figure}
 
 \section{Висновки}
 Було проаналізовано предметну область ательє, уточнено вимоги та розроблено модель системи за допомогою UML і ER-діаграм. Запропоновано архітектуру рішення та підходи до тестування. Результати можуть бути використані як основа для подальшої детальної реалізації.

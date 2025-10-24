@@ -14,6 +14,9 @@
 \contentsline {subsection}{\numberline {3.5}ER-діаграма бази даних}{6}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Діаграма компонентів (структури)}{6}{subsection.3.6}%
 \contentsline {section}{\numberline {4}Реалізація}{6}{section.4}%
-\contentsline {section}{\numberline {5}Тестування}{6}{section.5}%
-\contentsline {section}{\numberline {6}Висновки}{7}{section.6}%
-\contentsline {section}{Список використаних джерел}{7}{section*.8}%
+\contentsline {subsection}{\numberline {4.1}Фрагменти коду C\#}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}SQL (SQLite) схеми та запити}{10}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Тестування}{11}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Статистичні графіки}{11}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Висновки}{11}{section.6}%
+\contentsline {section}{Список використаних джерел}{12}{section*.13}%
