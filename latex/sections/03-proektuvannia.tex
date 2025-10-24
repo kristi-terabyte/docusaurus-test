@@ -1,0 +1,140 @@
+\section{Проєктування системи}
+\subsection{Діаграма прецедентів}
+На рис.~\ref{fig:usecase} подано узагальнену діаграму прецедентів.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    % Actors
+    \node (client) [draw, rounded corners, align=center] {Актор\\Клієнт};
+    \node (admin) [draw, rounded corners, align=center, below=of client] {Актор\\Адміністратор};
+    \node (master) [draw, rounded corners, align=center, below=of admin] {Актор\\Майстер};
+    % System boundary
+    \node (sys) [draw, minimum width=9cm, minimum height=6cm, right=3.8cm of admin] {};
+    \node at ($(sys.north)+(0,-0.4)$) {ІС Ательє};
+    % Use cases
+    \node (uc1) at ($(sys.west)!0.5!(sys.east)+(0,1.8)$) [draw, ellipse, align=center, minimum width=3.8cm] {Оформити\\замовлення};
+    \node (uc2) [draw, ellipse, below=1.1cm of uc1, minimum width=3.8cm, align=center] {Розрахувати\\вартість};
+    \node (uc3) [draw, ellipse, below=1.1cm of uc2, minimum width=3.8cm, align=center] {Виконати\\роботи};
+    \node (uc4) [draw, ellipse, below=1.1cm of uc3, minimum width=3.8cm, align=center] {Облік\\платежів};
+    % Associations
+    \draw[-{Latex}] (client.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) |- (uc2.west);
+    \draw[-{Latex}] (master.east) -- (uc3.west);
+    \draw[-{Latex}] (admin.east) |- (uc4.west);
+  \end{tikzpicture}
+  \caption{Діаграма прецедентів для ІС ательє}
+  \label{fig:usecase}
+\end{figure}
+
+\subsection{Діаграма активності: обробка замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.4cm]
+    \tikzset{act/.style={draw,rounded corners,minimum width=3.6cm,align=center}};
+    \node (start) [circle, fill=black, minimum size=6pt, inner sep=0pt] {};
+    \node (a1) [act, below=of start] {Прийняти замовлення};
+    \node (a2) [act, below=of a1] {Оцінити вартість \\ і терміни};
+    \node (a3) [act, below=of a2] {Призначити майстра};
+    \node (a4) [act, below=of a3] {Виконати роботи};
+    \node (a5) [act, below=of a4] {Прийняти оплату \\ і видати виріб};
+    \node (end) [circle, draw, minimum size=8pt, inner sep=0pt, below=of a5] {};
+    \draw[-{Latex}] (start) -- (a1);
+    \draw[-{Latex}] (a1) -- (a2);
+    \draw[-{Latex}] (a2) -- (a3);
+    \draw[-{Latex}] (a3) -- (a4);
+    \draw[-{Latex}] (a4) -- (a5);
+    \draw[-{Latex}] (a5) -- (end);
+  \end{tikzpicture}
+  \caption{Діаграма активності процесу замовлення}
+  \label{fig:activity}
+\end{figure}
+
+\subsection{Діаграма класів}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{class/.style={draw,rectangle,minimum width=4cm,align=left}}
+    \node (client) [class] {\textbf{Клієнт}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+телефон: string};
+    \node (order) [class, right=3.5cm of client] {\textbf{Замовлення}\\\hrulefill\\+id: UUID\\+дата: date\\+статус: enum\\+сума: money};
+    \node (service) [class, below=of order] {\textbf{Послуга}\\\hrulefill\\+id: UUID\\+назва: string\\+ціна: money};
+    \node (master) [class, below=of client] {\textbf{Майстер}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+кваліфікація: string};
+
+    % Relations
+    \draw[-{Latex}] (client) -- node[above,sloped]{1..*} (order);
+    \draw[-{Latex}] (order) -- node[right]{*} (service);
+    \draw[-{Latex}] (master) -- node[above,sloped]{1..*} (order);
+  \end{tikzpicture}
+  \caption{Спрощена діаграма класів}
+  \label{fig:class}
+\end{figure}
+
+\subsection{Діаграма послідовностей: оформлення замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=0.8cm]
+    \tikzset{lifeline/.style={draw,minimum width=2.4cm,align=center}}
+    \node (actor) [lifeline] {Клієнт};
+    \node (ui) [lifeline, right=2.5cm of actor] {UI};
+    \node (svc) [lifeline, right=2.5cm of ui] {Сервіс};
+    \node (db) [lifeline, right=2.5cm of svc] {БД};
+
+    % Lifelines
+    \draw[dashed] (actor.south) -- ++(0,-5.5);
+    \draw[dashed] (ui.south) -- ++(0,-5.5);
+    \draw[dashed] (svc.south) -- ++(0,-5.5);
+    \draw[dashed] (db.south) -- ++(0,-5.5);
+
+    % Messages
+    \draw[-{Latex}] (actor) -- node[above]{ввести дані} (ui);
+    \draw[-{Latex}] (ui) -- node[above]{createOrder()} (svc);
+    \draw[-{Latex}] (svc) -- node[above]{INSERT} (db);
+    \draw[-{Latex}] (db) -- node[below]{OK} (svc);
+    \draw[-{Latex}] (svc) -- node[below]{orderId} (ui);
+    \draw[-{Latex}] (ui) -- node[below]{підтвердження} (actor);
+  \end{tikzpicture}
+  \caption{Діаграма послідовностей}
+  \label{fig:sequence}
+\end{figure}
+
+\subsection{ER-діаграма бази даних}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{ent/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \tikzset{rel/.style={draw,diamond,aspect=2,align=center,inner sep=1pt}};
+
+    \node (client) [ent] {CLIENT\\id, name, phone};
+    \node (order) [ent, right=3.5cm of client] {ORDER\\id, date, status, sum, clientId};
+    \node (service) [ent, below=of order] {SERVICE\\id, title, price};
+    \node (orderitem) [ent, below=of client] {ORDER\_ITEM\\orderId, serviceId, qty, price};
+
+    \node (r1) [rel, right=1.6cm of client] {places};
+    \node (r2) [rel, below=0.8cm of r1] {contains};
+
+    \draw (client) -- node[above]{1} (r1);
+    \draw (r1) -- node[above]{N} (order);
+    \draw (order) -- node[right]{1} (r2);
+    \draw (r2) -- node[right]{N} (orderitem);
+    \draw (service) -- node[right]{1} (r2);
+  \end{tikzpicture}
+  \caption{ER-діаграма БД}
+  \label{fig:er}
+\end{figure}
+
+\subsection{Діаграма компонентів (структури)}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{comp/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \node (web) [comp] {Web UI};
+    \node (api) [comp, right=3.5cm of web] {REST API};
+    \node (db) [comp, right=3.5cm of api] {RDBMS};
+
+    \draw[-{Latex}] (web) -- (api);
+    \draw[-{Latex}] (api) -- (db);
+  \end{tikzpicture}
+  \caption{Діаграма компонентів}
+  \label{fig:components}
+\end{figure}

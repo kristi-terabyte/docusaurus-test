@@ -1,0 +1,754 @@
+% !TEX program = xelatex
+\documentclass[14pt,a4paper]{extarticle}
+
+% Ukrainian and DSTU-friendly setup
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{ukrainian}
+\setotherlanguage{english}
+% Use CMU fonts with Cyrillic support
+\setmainfont{CMU Serif}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
+\newfontfamily\cyrillicfont{CMU Serif}
+\newfontfamily\cyrillicfontsf{CMU Sans Serif}
+\newfontfamily\cyrillicfonttt{CMU Typewriter Text}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,shapes.geometric,calc}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{pgf-pie}
+\usepackage{pgfgantt}
+\usepackage{listings}
+\usepackage{listingsutf8}
+
+% Listings setup for C# and SQL
+\lstdefinelanguage{CSharp}{
+  morekeywords={abstract,event,new,struct,as,explicit,null,switch,base,extern,object,this,bool,false,operator,throw,break,finally,out,true,byte,fixed,override,try,case,float,params,typeof,catch,for,private,uint,char,foreach,protected,ulong,checked,goto,public,unchecked,class,if,readonly,unsafe,const,implicit,ref,ushort,continue,in,return,using,decimal,int,sbyte,virtual,default,interface,sealed,volatile,delegate,internal,short,void,do,is,sizeof,while,double,lock,stackalloc,else,long,static,enum,namespace,string},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"
+}
+
+\lstdefinestyle{code}{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=6pt,
+  frame=single,
+  showstringspaces=false,
+  breaklines=true,
+  tabsize=2,
+  columns=fullflexible,
+}
+\lstset{style=code,inputencoding=utf8}
+
+% Title page variables (edit as needed)
+\newcommand{\University}{Назва закладу вищої освіти}
+\newcommand{\Faculty}{Факультет/Інститут}
+\newcommand{\Department}{Кафедра}
+\newcommand{\WorkType}{Курсова робота}
+\newcommand{\Topic}{Інформаційна система ательє}
+\newcommand{\Discipline}{З дисципліни: Об'єктно-орієнтоване проєктування}
+\newcommand{\Student}{Прізвище Ім'я По батькові}
+\newcommand{\Group}{Група ХХ-ХХ}
+\newcommand{\Supervisor}{Науковий керівник, ст. посада, ПІБ}
+\newcommand{\City}{Місто}
+\newcommand{\Year}{2025}
+
+% Title page per DSTU
+\pretitle{\begin{center}\large \University\\ \Faculty\\ \Department\\[2cm] \WorkType \\[0.5cm] \textbf{\Topic}\\[0.5cm] \Discipline \\[3cm]}
+\posttitle{\par\end{center}}
+\preauthor{\begin{flushright}}
+\postauthor{\end{flushright}}
+\author{\begin{tabular}{@{}l@{}}Виконав(ла): \\ студент(ка) \Group \\ \Student \\[0.5cm] Керівник: \\ \Supervisor\end{tabular}}
+\date{\vfill \begin{center}\City~\Year\end{center}}
+
+% TOC formatting
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setcounter{tocdepth}{2}
+
+% Captions in Ukrainian
+\addto\captionsukrainian{\renewcommand{\figurename}{Рис.}}
+\addto\captionsukrainian{\renewcommand{\tablename}{Табл.}}
+\addto\captionsukrainian{\renewcommand{\contentsname}{ЗМІСТ}}
+
+\begin{document}
+
+% Title page
+\title{\WorkType: \Topic}
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+% TOC
+\pagenumbering{roman}
+\setcounter{page}{2}
+\tableofcontents
+\clearpage
+
+% Abbreviations
+\section*{Перелік умовних позначень, скорочень}
+\addcontentsline{toc}{section}{Перелік умовних позначень, скорочень}
+API — прикладний програмний інтерфейс; БД — база даних; UML — мова уніфікованого моделювання.
+\clearpage
+
+% Intro
+\pagenumbering{arabic}
+\section{Вступ}
+Метою курсової роботи є розроблення та документування інформаційної системи ательє, що підтримує процеси прийому замовлень, обліку клієнтів, ведення номенклатури послуг та матеріалів, планування завантаження майстрів і розрахунку вартості робіт.
+
+Актуальність теми обумовлена потребою малих підприємств сфери побутового обслуговування в цифровізації обліку та процесів, підвищенні прозорості взаємодії з клієнтами та оптимізації ресурсів.
+
+Об'єкт дослідження — процеси діяльності ательє з пошиття та ремонту одягу. Предмет дослідження — методи аналізу вимог і проєктування програмних систем із використанням нотацій UML і ER.
+
+Структура роботи відповідає вимогам ДСТУ та включає аналіз предметної області, формалізацію вимог, проєктування (діаграми прецедентів, активності, класів, компонентів, послідовностей, ER-діаграму), стислий опис реалізації, підходи до тестування та висновки.
+
+\section{Аналіз предметної області та вимог}
+\subsection{Опис предметної області}
+Ательє надає послуги з пошиття та ремонту виробів. Основні сутності: клієнт, замовлення, виріб, послуга, матеріал, майстер, платіж. Замовлення має статуси: нове, у роботі, готове, видане, скасоване.
+
+\subsection{Зацікавлені сторони}
+\begin{itemize}
+  \item Клієнт — оформлює замовлення, отримує виріб, здійснює оплату;
+  \item Адміністратор — приймає замовлення, веде клієнтську базу, формує рахунки;
+  \item Майстер — виконує роботи, фіксує етапи та витрати матеріалів;
+  \item Власник — аналізує звітність, встановлює прайс-листи.
+\end{itemize}
+
+\subsection{Функціональні вимоги}
+\begin{itemize}
+  \item Реєстрація клієнтів та їх контактних даних;
+  \item Оформлення замовлень з переліком робіт і матеріалів;
+  \item Калькуляція вартості; облік платежів (передплата, остаточний розрахунок);
+  \item Планування та відстеження етапів виконання робіт;
+  \item Формування звітів (виручка, завантаженість майстрів, популярні послуги).
+\end{itemize}
+
+\subsection{Нефункціональні вимоги}
+\begin{itemize}
+  \item Зручність інтерфейсу для настільних браузерів;
+  \item Збереження даних у реляційній БД; резервне копіювання;
+  \item Аудит змін замовлень та платежів;
+  \item Ролі та доступи (адміністратор, майстер, власник).
+\end{itemize}
+
+\section{Проєктування системи}
+\subsection{Діаграма прецедентів}
+На рис.~\ref{fig:usecase} подано узагальнену діаграму прецедентів.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    % Actors
+    \node (client) [draw, rounded corners, align=center] {Актор\\Клієнт};
+    \node (admin) [draw, rounded corners, align=center, below=of client] {Актор\\Адміністратор};
+    \node (master) [draw, rounded corners, align=center, below=of admin] {Актор\\Майстер};
+    % System boundary
+    \node (sys) [draw, minimum width=9cm, minimum height=6cm, right=3.8cm of admin] {};
+    \node at ($(sys.north)+(0,-0.4)$) {ІС Ательє};
+    % Use cases
+    \node (uc1) at ($(sys.west)!0.5!(sys.east)+(0,1.8)$) [draw, ellipse, align=center, minimum width=3.8cm] {Оформити\\замовлення};
+    \node (uc2) [draw, ellipse, below=1.1cm of uc1, minimum width=3.8cm, align=center] {Розрахувати\\вартість};
+    \node (uc3) [draw, ellipse, below=1.1cm of uc2, minimum width=3.8cm, align=center] {Виконати\\роботи};
+    \node (uc4) [draw, ellipse, below=1.1cm of uc3, minimum width=3.8cm, align=center] {Облік\\платежів};
+    % Associations
+    \draw[-{Latex}] (client.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) |- (uc2.west);
+    \draw[-{Latex}] (master.east) -- (uc3.west);
+    \draw[-{Latex}] (admin.east) |- (uc4.west);
+  \end{tikzpicture}
+  \caption{Діаграма прецедентів для ІС ательє}
+  \label{fig:usecase}
+\end{figure}
+
+\subsection{Діаграма активності: обробка замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.4cm]
+    \tikzset{act/.style={draw,rounded corners,minimum width=3.6cm,align=center}};
+    \node (start) [circle, fill=black, minimum size=6pt, inner sep=0pt] {};
+    \node (a1) [act, below=of start] {Прийняти замовлення};
+    \node (a2) [act, below=of a1] {Оцінити вартість \\ і терміни};
+    \node (a3) [act, below=of a2] {Призначити майстра};
+    \node (a4) [act, below=of a3] {Виконати роботи};
+    \node (a5) [act, below=of a4] {Прийняти оплату \\ і видати виріб};
+    \node (end) [circle, draw, minimum size=8pt, inner sep=0pt, below=of a5] {};
+    \draw[-{Latex}] (start) -- (a1);
+    \draw[-{Latex}] (a1) -- (a2);
+    \draw[-{Latex}] (a2) -- (a3);
+    \draw[-{Latex}] (a3) -- (a4);
+    \draw[-{Latex}] (a4) -- (a5);
+    \draw[-{Latex}] (a5) -- (end);
+  \end{tikzpicture}
+  \caption{Діаграма активності процесу замовлення}
+  \label{fig:activity}
+\end{figure}
+
+\subsection{Діаграма класів}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{class/.style={draw,rectangle,minimum width=4cm,align=left}}
+    \node (clientc) [class] {\textbf{Клієнт}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+телефон: string};
+    \node (order) [class, right=3.5cm of clientc] {\textbf{Замовлення}\\\hrulefill\\+id: UUID\\+дата: date\\+статус: enum\\+сума: money};
+    \node (service) [class, below=of order] {\textbf{Послуга}\\\hrulefill\\+id: UUID\\+назва: string\\+ціна: money};
+    \node (master) [class, below=of clientc] {\textbf{Майстер}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+кваліфікація: string};
+
+    % Relations
+    \draw[-{Latex}] (clientc) -- node[above,sloped]{1..*} (order);
+    \draw[-{Latex}] (order) -- node[right]{*} (service);
+    \draw[-{Latex}] (master) -- node[above,sloped]{1..*} (order);
+  \end{tikzpicture}
+  \caption{Спрощена діаграма класів}
+  \label{fig:class}
+\end{figure}
+
+\subsection{Діаграма послідовностей: оформлення замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=0.8cm]
+    \tikzset{lifeline/.style={draw,minimum width=2.4cm,align=center}}
+    \node (actor) [lifeline] {Клієнт};
+    \node (ui) [lifeline, right=2.5cm of actor] {UI};
+    \node (svc) [lifeline, right=2.5cm of ui] {Сервіс};
+    \node (db) [lifeline, right=2.5cm of svc] {БД};
+
+    % Lifelines
+    \draw[dashed] (actor.south) -- ++(0,-5.5);
+    \draw[dashed] (ui.south) -- ++(0,-5.5);
+    \draw[dashed] (svc.south) -- ++(0,-5.5);
+    \draw[dashed] (db.south) -- ++(0,-5.5);
+
+    % Messages
+    \draw[-{Latex}] (actor) -- node[above]{ввести дані} (ui);
+    \draw[-{Latex}] (ui) -- node[above]{createOrder()} (svc);
+    \draw[-{Latex}] (svc) -- node[above]{INSERT} (db);
+    \draw[-{Latex}] (db) -- node[below]{OK} (svc);
+    \draw[-{Latex}] (svc) -- node[below]{orderId} (ui);
+    \draw[-{Latex}] (ui) -- node[below]{підтвердження} (actor);
+  \end{tikzpicture}
+  \caption{Діаграма послідовностей}
+  \label{fig:sequence}
+\end{figure}
+
+\subsection{ER-діаграма бази даних}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{ent/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \tikzset{rel/.style={draw,diamond,aspect=2,align=center,inner sep=1pt}};
+
+    \node (client) [ent] {CLIENT\\id, name, phone};
+    \node (orderent) [ent, right=3.5cm of client] {ORDER\\id, date, status, sum, clientId};
+    \node (serviceent) [ent, below=of orderent] {SERVICE\\id, title, price};
+    \node (orderitem) [ent, below=of client] {ORDER\_ITEM\\orderId, serviceId, qty, price};
+
+    \node (r1) [rel, right=1.6cm of client] {places};
+    \node (r2) [rel, below=0.8cm of r1] {contains};
+
+    \draw (client) -- node[above]{1} (r1);
+    \draw (r1) -- node[above]{N} (orderent);
+    \draw (orderent) -- node[right]{1} (r2);
+    \draw (r2) -- node[right]{N} (orderitem);
+    \draw (serviceent) -- node[right]{1} (r2);
+  \end{tikzpicture}
+  \caption{ER-діаграма БД}
+  \label{fig:er}
+\end{figure}
+
+\subsection{Діаграма компонентів (структури)}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{comp/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \node (web) [comp] {Web UI};
+    \node (api) [comp, right=3.5cm of web] {REST API};
+    \node (dbcomp) [comp, right=3.5cm of api] {RDBMS};
+
+    \draw[-{Latex}] (web) -- (api);
+    \draw[-{Latex}] (api) -- (dbcomp);
+  \end{tikzpicture}
+  \caption{Діаграма компонентів}
+  \label{fig:components}
+\end{figure}
+
+% --------------------------------------------------
+% ДОДАТКОВІ РОЗДІЛИ ДЛЯ РОЗШИРЕННЯ ЗМІСТУ
+% --------------------------------------------------
+\section{Формалізація вимог}
+\subsection{Функціональні вимоги}
+Нижче наведено перелік основних функціональних вимог (FR). Для кожної вимоги вказано короткий опис, пріоритет і критерії приймання.
+
+\setlength{\LTpre}{0pt}\setlength{\LTpost}{6pt}
+\begin{longtable}{@{}p{1.6cm} p{4.2cm} p{7.2cm} p{1.7cm} p{6.0cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Назва} & \textbf{Опис} & \textbf{Пріор.} & \textbf{Критерії приймання}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Назва} & \textbf{Опис} & \textbf{Пріор.} & \textbf{Критерії приймання}\\
+\midrule
+\endhead
+FR-1 & Реєстрація клієнта & Система дозволяє створити клієнта з ПІБ і телефоном. & Високий & Після збереження клієнт відображається в переліку; валідація телефону. \\
+FR-2 & Пошук клієнтів & Пошук клієнтів за ПІБ/телефоном з частковим збігом. & Високий & Пошук повертає релевантні записи за підрядком. \\
+FR-3 & Створення замовлення & Оформлення нового замовлення для обраного клієнта. & Високий & Присвоєно ID, дата, статус=New; запис збережено. \\
+FR-4 & Додавання послуг & Додавання позицій послуг до замовлення з ціною і кількістю. & Високий & Позиції зберігаються; загальна сума перерахована. \\
+FR-5 & Калькуляція вартості & Розрахунок загальної вартості (роботи + матеріали). & Високий & Загальна сума відображається з точністю 2 знаки. \\
+FR-6 & Редагування замовлення & Зміна складу, термінів, виконавця до старту робіт. & Середній & Зміни логуються; статусні обмеження дотримані. \\
+FR-7 & Призначення майстра & Призначення відповідального майстра із графіка завантаження. & Високий & Враховано поточне навантаження; майстер отримує задачу. \\
+FR-8 & Етапи виконання & Фіксація етапів: прийом, кроїння, пошиття, примірка, видача. & Середній & Хід відображається на шкалі прогресу замовлення. \\
+FR-9 & Облік матеріалів & Списання матеріалів з партій та складу. & Середній & Залишки коректно зменшуються; не допускається від’ємний залишок. \\
+FR-10 & Облік платежів & Фіксація передплати й остаточного розрахунку. & Високий & Сальдо=0 на момент видачі; квитанції формуються. \\
+FR-11 & Скасування замовлення & Скасування з причиною; відкат бронювань, повернення коштів. & Середній & Лог змін; коректні фінансові проводки. \\
+FR-12 & Видача виробу & Завершення робіт, зміна статусу на Delivered. & Високий & Статус змінено; дата видачі зафіксована. \\
+FR-13 & Звіти по виручці & Формування звіту по місяцях і послугах. & Середній & Дані відповідають платежам і статусам. \\
+FR-14 & Звіт по завантаженню & Звіт по зайнятості майстрів у періоді. & Середній & Відсоток завантаження обчислюється за задачами. \\
+FR-15 & Прайс-лист & Управління переліком послуг і тарифами. & Високий & Історія змін цін зберігається. \\
+FR-16 & Резервне копіювання & Експорт БД до файлу; імпорт з резерву. & Низький & Резерв створюється; відновлення повертає консистентний стан. \\
+FR-17 & Ролі та доступ & Ролі: адміністратор, майстер, власник. & Високий & Доступи відповідають матриці прав. \\
+FR-18 & Аудит & Лог змін замовлень і платежів. & Середній & Видно хто, коли, що змінив. \\
+FR-19 & Повідомлення клієнту & Сповіщення (email/SMS) про етапи й готовність. & Низький & Шаблони листів; відстеження доставки. \\
+FR-20 & Примірки & Планування і фіксація результатів примірок. & Середній & Коментарі зберігаються; історія доступна. \\
+FR-21 & Фото виробу & Збереження фото дефектів/етапів для історії. & Низький & Фото пов’язані з замовленням; видимі в картці. \\
+FR-22 & Знижки та промо & Застосування знижок і промокодів. & Низький & У чеку показана знижка; тотал коректний. \\
+FR-23 & Податки & Нарахування ПДВ за ставкою. & Низький & Сума ПДВ обчислюється й відображається. \\
+FR-24 & Повернення коштів & Оформлення повернення з підставою. & Низький & Коректні проводки; статус платежу оновлено. \\
+FR-25 & Експорт звітів & Експорт у CSV/XLSX основних звітів. & Низький & Формат валідний; кодування UTF-8. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Нефункціональні вимоги}
+\begin{longtable}{@{}p{1.8cm} p{5.0cm} p{10.0cm} p{2.0cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Атрибут якості} & \textbf{Опис} & \textbf{Пріор.}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Атрибут якості} & \textbf{Опис} & \textbf{Пріор.}\\
+\midrule
+\endhead
+NFR-1 & Продуктивність & 95-й перцентиль відповіді API $<$ 300\,мс для типових операцій. & Високий \\
+NFR-2 & Доступність & 99{.}5\% на місяць; відновлення після збою $<$ 15\,хв. & Високий \\
+NFR-3 & Безпека & Паролі хешуються (Argon2/BCrypt); JWT; ролева авторизація. & Високий \\
+NFR-4 & Надійність даних & Транзакції з ACID; регулярні резервні копії. & Високий \\
+NFR-5 & Масштабованість & Горизонтальне масштабування API; БД~— вертикальне. & Середній \\
+NFR-6 & Супровідність & Документація OpenAPI; логування та трасування. & Середній \\
+NFR-7 & UX & Послідовний дизайн; доступність WCAG 2.1 AA. & Середній \\
+NFR-8 & Сумісність & Підтримка останніх версій Chrome/Firefox/Edge. & Середній \\
+NFR-9 & Локалізація & Українська локаль за замовчуванням; підтримка i18n. & Низький \\
+NFR-10 & Аудит & Історія змін критичних сутностей (замовлення, платежі). & Високий \\
+\bottomrule
+\end{longtable}
+
+\subsection{Опис ключових прецедентів}
+\paragraph{UC-1: Оформити замовлення} Мета — створити замовлення для клієнта, визначити перелік робіт, розрахувати вартість і терміни. Основний потік: вибір клієнта → введення виробу й послуг → розрахунок → збереження. Винятки: невалідні дані; недоступні матеріали.
+
+\paragraph{UC-2: Виконати роботи} Мета — забезпечити виконання етапів з фіксацією часу та витрат. Потік: призначення майстра → етапи → контроль якості → готовність.
+
+\paragraph{UC-3: Прийняти оплату} Мета — облік передплати/остаточного розрахунку. Потік: генерація рахунку → прийом платежу → оновлення сальдо.
+
+\clearpage
+
+\section{Модель даних і словник даних}
+Наведено словник даних (Data Dictionary) для основних таблиць. Типи подано для SQLite; у промисловій СУБД можуть відрізнятися.
+
+\begin{longtable}{@{}p{2.8cm} p{3.2cm} p{3.2cm} p{2.0cm} p{3.2cm} p{8.2cm}@{}}
+\toprule
+\textbf{Таблиця} & \textbf{Поле} & \textbf{Тип} & \textbf{Null} & \textbf{За замовч.} & \textbf{Опис}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Таблиця} & \textbf{Поле} & \textbf{Тип} & \textbf{Null} & \textbf{За замовч.} & \textbf{Опис}\\
+\midrule
+\endhead
+Client & Id & TEXT (UUID) & Ні & — & Ідентифікатор клієнта. \\
+Client & FullName & TEXT & Ні & — & ПІБ клієнта. \\
+Client & Phone & TEXT & Ні & — & Контактний телефон у міжнародному форматі. \\
+\addlinespace
+Service & Id & TEXT (UUID) & Ні & — & Ідентифікатор послуги. \\
+Service & Title & TEXT & Ні & — & Назва послуги. \\
+Service & Price & REAL & Ні & 0 & Базова ціна. \\
+\addlinespace
+\texttt{[Order]} & Id & TEXT (UUID) & Ні & — & Ідентифікатор замовлення. \\
+\texttt{[Order]} & Date & TEXT (ISO) & Ні & now & Дата створення. \\
+\texttt{[Order]} & Status & INTEGER & Ні & 0 & Статус (enum). \\
+\texttt{[Order]} & Total & REAL & Ні & 0 & Загальна сума. \\
+\texttt{[Order]} & ClientId & TEXT & Ні & — & Посилання на Client.Id. \\
+\addlinespace
+OrderItem & OrderId & TEXT & Ні & — & Посилання на Order.Id. \\
+OrderItem & ServiceId & TEXT & Ні & — & Посилання на Service.Id. \\
+OrderItem & Qty & REAL & Ні & 1 & Кількість. \\
+OrderItem & Price & REAL & Ні & — & Ціна за одиницю. \\
+\addlinespace
+Payment & Id & TEXT (UUID) & Ні & — & Ідентифікатор платежу. \\
+Payment & OrderId & TEXT & Ні & — & Посилання на Order.Id. \\
+Payment & Date & TEXT (ISO) & Ні & now & Дата платежу. \\
+Payment & Amount & REAL & Ні & — & Сума платежу. \\
+Payment & Method & TEXT & Ні & cash & Метод (cash/card). \\
+\addlinespace
+Master & Id & TEXT (UUID) & Ні & — & Ідентифікатор майстра. \\
+Master & FullName & TEXT & Ні & — & ПІБ майстра. \\
+Master & Skill & TEXT & Так & — & Кваліфікація/спеціалізація. \\
+\addlinespace
+Material & Id & TEXT (UUID) & Ні & — & Ідентифікатор матеріалу. \\
+Material & Title & TEXT & Ні & — & Назва матеріалу. \\
+Material & Qty & REAL & Ні & 0 & Залишок на складі. \\
+Material & Unit & TEXT & Ні & pcs & Одиниця виміру (м, м², pcs). \\
+\addlinespace
+AuditLog & Id & INTEGER & Ні & autoinc & Первинний ключ. \\
+AuditLog & Entity & TEXT & Ні & — & Назва сутності. \\
+AuditLog & EntityId & TEXT & Ні & — & Ідентифікатор сутності. \\
+AuditLog & Action & TEXT & Ні & — & Дія (CREATE/UPDATE/DELETE). \\
+AuditLog & ChangedAt & TEXT (ISO) & Ні & now & Час зміни. \\
+AuditLog & UserId & TEXT & Так & — & Виконавець (якщо автентифікований). \\
+\bottomrule
+\end{longtable}
+
+\subsection{Нормалізація та обмеження цілісності}
+Схема відповідає щонайменше 3НФ: довідники винесено окремо, \mbox{Order-OrderItem} — зв’язок \(1\!:\!N\), суми та ПДВ — похідні поля. Референційна цілісність забезпечується зовнішніми ключами; тотал замовлення перераховується тригерами після змін позицій.
+
+\clearpage
+
+\section{Додаткові діаграми}
+\subsection{Діаграма станів замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=2.2cm]
+    \tikzset{state/.style={draw,rounded corners,minimum width=3.4cm,align=center,inner sep=4pt}};
+    \node (new) [state] {New};
+    \node (inprog) [state, right=of new] {InProgress};
+    \node (ready) [state, right=of inprog] {Ready};
+    \node (deliv) [state, right=of ready] {Delivered};
+    \node (cancel) [state, below=of inprog] {Cancelled};
+    \draw[-{Latex}] (new) -- node[above]{start} (inprog);
+    \draw[-{Latex}] (inprog) -- node[above]{finish} (ready);
+    \draw[-{Latex}] (ready) -- node[above]{issue} (deliv);
+    \draw[-{Latex}] (new) -- node[left]{cancel} (cancel);
+    \draw[-{Latex}] (inprog) -- node[right]{cancel} (cancel);
+  \end{tikzpicture}
+  \caption{Станова діаграма життєвого циклу замовлення}
+\end{figure}
+
+\subsection{Діаграма розгортання}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=2.4cm]
+    \tikzset{nodebox/.style={draw,rectangle,minimum width=4.2cm,minimum height=1.2cm,align=center}};
+    \node (browser) [nodebox] {Клієнтський браузер};
+    \node (web) [nodebox, right=of browser] {Веб-сервер (Nginx)};
+    \node (api) [nodebox, right=of web] {API (.NET)};
+    \node (db) [nodebox, below=of api] {БД (SQLite/PostgreSQL)};
+    \draw[-{Latex}] (browser) -- node[above]{HTTPS} (web);
+    \draw[-{Latex}] (web) -- node[above]{HTTPS/REST} (api);
+    \draw[-{Latex}] (api) -- node[right]{TCP} (db);
+  \end{tikzpicture}
+  \caption{Схема розгортання компонентів}
+\end{figure}
+
+\clearpage
+
+\section{План-графік робіт}
+\begin{center}
+\begin{ganttchart}[
+  time slot unit=month,
+  x unit=0.65cm,
+  y unit chart=0.7cm,
+  vgrid,hgrid,
+  title height=1,
+  bar height=0.6
+]{2025-01}{2025-06}
+  \gantttitlecalendar{year, month} \\
+  \ganttbar{Аналіз вимог}{2025-01}{2025-02} \\
+  \ganttbar{Проєктування}{2025-02}{2025-03} \\
+  \ganttbar{Реалізація}{2025-03}{2025-05} \\
+  \ganttbar{Тестування}{2025-05}{2025-06} \\
+  \ganttbar{Впровадження}{2025-06}{2025-06}
+\end{ganttchart}
+\end{center}
+
+\clearpage
+
+\section{Аналітика та візуалізація}
+\subsection{Виручка за місяцями}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.95\textwidth,height=6cm,
+      xlabel={Місяць}, ylabel={Виручка, тис. грн},
+      ymin=0, xtick=data,
+      symbolic x coords={Січ,Лют,Бер,Кві,Тра,Чер,Лип,Сер,Вер,Жов,Лис,Гру},
+      ymajorgrids
+    ]
+      \addplot+[mark=*, very thick, color=blue] coordinates {
+        (Січ,180) (Лют,190) (Бер,210) (Кві,240) (Тра,260) (Чер,255)
+        (Лип,270) (Сер,265) (Вер,280) (Жов,300) (Лис,295) (Гру,320)
+      };
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Місячна виручка протягом року}
+\end{figure}
+
+\subsection{Завантаженість майстрів (стек-бар)}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ybar stacked,
+      bar width=10pt,
+      width=0.95\textwidth,height=6.2cm,
+      ymin=0, ymax=160,
+      ylabel={Години/міс.},
+      symbolic x coords={Бер,Кві,Тра,Чер,Лип,Сер},
+      xtick=data, legend columns=3, legend style={at={(0.5,-0.18)},anchor=north}
+    ]
+      \addplot coordinates {(Бер,20) (Кві,25) (Тра,28) (Чер,30) (Лип,26) (Сер,24)};\addlegendentry{Майстер A}
+      \addplot coordinates {(Бер,18) (Кві,20) (Тра,22) (Чер,24) (Лип,20) (Сер,19)};\addlegendentry{Майстер B}
+      \addplot coordinates {(Бер,15) (Кві,18) (Тра,20) (Чер,22) (Лип,21) (Сер,20)};\addlegendentry{Майстер C}
+      \addplot coordinates {(Бер,12) (Кві,14) (Тра,16) (Чер,18) (Лип,15) (Сер,14)};\addlegendentry{Майстер D}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Навантаження майстрів по місяцях}
+\end{figure}
+
+\clearpage
+
+\section{Реалізація}
+Програмна реалізація може бути виконана у вигляді веб-додатка з архітектурою клієнт–сервер. Клієнтська частина (наприклад, React) взаємодіє з серверним REST API (наприклад, Node.js/Express, Java Spring або Python FastAPI), дані зберігаються у реляційній СУБД (PostgreSQL/MySQL). Аутентифікація може базуватися на JWT, авторизація — на ролях.
+
+\subsection{Фрагменти коду C\#}
+\subsubsection*{DTO та моделі}
+\begin{lstlisting}[language=CSharp,caption={Моделі домену для ательє}]
+public sealed class Client
+{
+    public Guid Id { get; init; }
+    public string FullName { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
+}
+
+public enum OrderStatus
+{
+    New,
+    InProgress,
+    Ready,
+    Delivered,
+    Cancelled
+}
+
+public sealed class Order
+{
+    public Guid Id { get; init; }
+    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public OrderStatus Status { get; set; } = OrderStatus.New;
+    public decimal Total { get; set; }
+    public Guid ClientId { get; init; }
+}
+
+public sealed class Service
+{
+    public Guid Id { get; init; }
+    public string Title { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+}
+\end{lstlisting}
+
+\subsubsection*{Робота зі SQLite (ADO.NET)}
+\begin{lstlisting}[language=CSharp,caption={Ініціалізація SQLite та запити}]
+using System.Data;
+using Microsoft.Data.Sqlite; // dotnet add package Microsoft.Data.Sqlite
+
+const string ConnectionString = "Data Source=atelier.db";
+
+using var connection = new SqliteConnection(ConnectionString);
+await connection.OpenAsync();
+
+// Створення таблиць
+var createSql = @"
+CREATE TABLE IF NOT EXISTS Client (
+  Id TEXT PRIMARY KEY,
+  FullName TEXT NOT NULL,
+  Phone TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Service (
+  Id TEXT PRIMARY KEY,
+  Title TEXT NOT NULL,
+  Price REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS [Order] (
+  Id TEXT PRIMARY KEY,
+  Date TEXT NOT NULL,
+  Status INTEGER NOT NULL,
+  Total REAL NOT NULL,
+  ClientId TEXT NOT NULL REFERENCES Client(Id)
+);
+";
+await new SqliteCommand(createSql, connection).ExecuteNonQueryAsync();
+
+// Вставка клієнта параметризовано
+var insertClient = new SqliteCommand(
+    "INSERT INTO Client (Id, FullName, Phone) VALUES ($id, $name, $phone)", connection);
+insertClient.Parameters.AddWithValue("$id", Guid.NewGuid().ToString());
+insertClient.Parameters.AddWithValue("$name", "Іван Петренко");
+insertClient.Parameters.AddWithValue("$phone", "+380501112233");
+await insertClient.ExecuteNonQueryAsync();
+
+// Вибірка з мапінгом у об'єкти
+var clients = new List<Client>();
+var select = new SqliteCommand("SELECT Id, FullName, Phone FROM Client", connection);
+using (var reader = await select.ExecuteReaderAsync(CommandBehavior.CloseConnection))
+{
+    while (await reader.ReadAsync())
+    {
+        clients.Add(new Client
+        {
+            Id = Guid.Parse(reader.GetString(0)),
+            FullName = reader.GetString(1),
+            Phone = reader.GetString(2)
+        });
+    }
+}
+\end{lstlisting}
+
+\subsubsection*{Мінімальний Web API (.NET)}
+\begin{lstlisting}[language=CSharp,caption={Мінімальний ендпойнт для замовлень}]
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/orders", async () =>
+{
+    using var connection = new SqliteConnection("Data Source=atelier.db");
+    await connection.OpenAsync();
+    using var cmd = new SqliteCommand("SELECT Id, Date, Status, Total, ClientId FROM [Order]", connection);
+    var list = new List<Order>();
+    using var reader = await cmd.ExecuteReaderAsync();
+    while (await reader.ReadAsync())
+    {
+        list.Add(new Order
+        {
+            Id = Guid.Parse(reader.GetString(0)),
+            Date = DateOnly.Parse(reader.GetString(1)),
+            Status = (OrderStatus)reader.GetInt32(2),
+            Total = (decimal)reader.GetDouble(3),
+            ClientId = Guid.Parse(reader.GetString(4))
+        });
+    }
+    return Results.Ok(list);
+});
+
+app.Run();
+\end{lstlisting}
+
+\subsection{SQL (SQLite) схеми та запити}
+\begin{lstlisting}[language=SQL,caption={DDL і базові запити для SQLite}]
+-- Створення таблиць
+CREATE TABLE IF NOT EXISTS Client (
+  Id TEXT PRIMARY KEY,
+  FullName TEXT NOT NULL,
+  Phone TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Service (
+  Id TEXT PRIMARY KEY,
+  Title TEXT NOT NULL,
+  Price REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS [Order] (
+  Id TEXT PRIMARY KEY,
+  Date TEXT NOT NULL,
+  Status INTEGER NOT NULL,
+  Total REAL NOT NULL,
+  ClientId TEXT NOT NULL REFERENCES Client(Id)
+);
+
+-- Топ-5 популярних послуг
+SELECT s.Title, COUNT(*) AS Times
+FROM [Order] o
+JOIN OrderItem oi ON oi.OrderId = o.Id
+JOIN Service s ON s.Id = oi.ServiceId
+GROUP BY s.Title
+ORDER BY Times DESC
+LIMIT 5;
+\end{lstlisting}
+
+\section{Тестування}
+Запропоновано рівні тестування: модульне (сервісні методи калькуляції, валідації), інтеграційне (взаємодія API та БД), системне (сценарії оформлення замовлення, оплати), приймальне (з користувачами). Для нефункціональних аспектів — навантажувальне тестування ключових ендпойнтів.
+
+\subsection{Статистичні графіки}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      ybar, bar width=14pt,
+      ymin=0,
+      ylabel={Кількість замовлень},
+      symbolic x coords={Січ,Лют,Бер,Кві,Тра,Чер},
+      xtick=data,
+      width=0.9\textwidth,height=6cm,
+      nodes near coords
+    ]
+      \addplot coordinates {(Січ,18) (Лют,22) (Бер,28) (Кві,32) (Тра,30) (Чер,35)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Динаміка замовлень за півріччя}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \pie[radius=2.6, text=legend, color={blue!60,orange!70!yellow,green!60,red!60}]{
+      40/Пошиття,
+      25/Ремонт,
+      20/Підгонка,
+      15/Інше
+    }
+  \end{tikzpicture}
+  \caption{Розподіл типів послуг}
+\end{figure}
+
+\section{Висновки}
+Було проаналізовано предметну область ательє, уточнено вимоги та розроблено модель системи за допомогою UML і ER-діаграм. Запропоновано архітектуру рішення та підходи до тестування. Результати можуть бути використані як основа для подальшої детальної реалізації.
+
+\section*{Список використаних джерел}
+\addcontentsline{toc}{section}{Список використаних джерел}
+\begin{thebibliography}{9}
+\bibitem{fowler}
+М. Фаулер. UML Distilled: A Brief Guide to the Standard Object Modeling Language. Addison-Wesley, 2003.
+
+\bibitem{connolly}
+Т. Конноллі, К. Бегг. Database Systems: A Practical Approach to Design, Implementation, and Management. Pearson, 2014.
+
+\bibitem{dstu}
+Вимоги до оформлення кваліфікаційних робіт за ДСТУ. Доступ: \url{https://example.edu/dstu-guidelines} (дата звернення: 24.10.2025).
+\end{thebibliography}
+
+\end{document}
