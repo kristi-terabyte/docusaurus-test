@@ -9,7 +9,7 @@
 \usepackage{tikz}
 \usepackage{pgf-umlcd}
 \usepackage{pgf-umlsd}
-\usetikzlibrary{shapes,arrows,positioning,calc}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit}
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xcolor}
@@ -175,47 +175,64 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}
-    % Актори
-    \node[actor] (client) at (-3,2) {Клієнт};
-    \node[actor] (admin) at (-3,-2) {Адміністратор};
-    \node[actor] (worker) at (-3,-5) {Кравець};
+\begin{tikzpicture}[scale=0.9, every node/.style={scale=0.85}]
+    % Стиль для акторів
+    \tikzstyle{actor}=[stick figure, minimum size=1.2cm, thick]
     
-    % Система
-    \draw[thick] (0,-6) rectangle (10,6);
-    \node at (5,5.5) {\textbf{Система управління ательє}};
+    % Актори зліва
+    \node at (-4,6) {\textbf{Клієнт}};
+    \draw[thick] (-4,5.5) circle (0.3cm);
+    \draw[thick] (-4,5.2) -- (-4,4.2);
+    \draw[thick] (-4.5,4.7) -- (-4,5) -- (-3.5,4.7);
+    \draw[thick] (-4.5,3.7) -- (-4,4.2) -- (-3.5,3.7);
+    
+    \node at (-4,2) {\textbf{Адміністратор}};
+    \draw[thick] (-4,1.5) circle (0.3cm);
+    \draw[thick] (-4,1.2) -- (-4,0.2);
+    \draw[thick] (-4.5,0.7) -- (-4,1) -- (-3.5,0.7);
+    \draw[thick] (-4.5,-0.3) -- (-4,0.2) -- (-3.5,-0.3);
+    
+    \node at (-4,-3) {\textbf{Кравець}};
+    \draw[thick] (-4,-3.5) circle (0.3cm);
+    \draw[thick] (-4,-3.8) -- (-4,-4.8);
+    \draw[thick] (-4.5,-4.3) -- (-4,-4) -- (-3.5,-4.3);
+    \draw[thick] (-4.5,-5.3) -- (-4,-4.8) -- (-3.5,-5.3);
+    
+    % Межа системи
+    \draw[thick] (-0.5,-6.5) rectangle (11,7);
+    \node at (5.2,6.6) {\textbf{Система управління ательє}};
     
     % Прецеденти для клієнта
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc1) at (3,4) {Переглянути\\каталог послуг};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc2) at (7,4) {Оформити\\замовлення};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc3) at (3,2) {Переглянути\\статус замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc1) at (2,5.5) {\small Переглянути\\каталог послуг};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc2) at (6,5.5) {\small Оформити\\замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc3) at (9,5.5) {\small Переглянути\\статус};
     
     % Прецеденти для адміністратора
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc4) at (2,0) {Управління\\клієнтами};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc5) at (5,0) {Управління\\замовленнями};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc6) at (8,0) {Управління\\послугами};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc7) at (2,-2) {Управління\\матеріалами};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc8) at (5,-2) {Управління\\персоналом};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc9) at (8,-2) {Формування\\звітів};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc4) at (1,2.5) {\small Керування\\клієнтами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc5) at (4,2.5) {\small Керування\\замовленнями};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc6) at (7,2.5) {\small Керування\\послугами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc7) at (1,-0.5) {\small Керування\\матеріалами};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc8) at (4,-0.5) {\small Керування\\персоналом};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc9) at (7,-0.5) {\small Формування\\звітів};
     
     % Прецеденти для кравця
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc10) at (3,-4.5) {Переглянути\\свої замовлення};
-    \node[ellipse, draw, minimum width=2.5cm, minimum height=1cm] (uc11) at (7,-4.5) {Оновити статус\\замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc10) at (2.5,-4) {\small Переглянути\\свої замовлення};
+    \node[ellipse, draw, thick, text width=2.2cm, align=center, minimum height=1.2cm] (uc11) at (7,-4) {\small Оновити\\статус};
     
     % Зв'язки
-    \draw (client) -- (uc1);
-    \draw (client) -- (uc2);
-    \draw (client) -- (uc3);
+    \draw[thick] (-3.5,5) -- (uc1);
+    \draw[thick] (-3.5,5) -- (uc2);
+    \draw[thick] (-3.5,5) -- (uc3);
     
-    \draw (admin) -- (uc4);
-    \draw (admin) -- (uc5);
-    \draw (admin) -- (uc6);
-    \draw (admin) -- (uc7);
-    \draw (admin) -- (uc8);
-    \draw (admin) -- (uc9);
+    \draw[thick] (-3.5,0.5) -- (uc4);
+    \draw[thick] (-3.5,0.5) -- (uc5);
+    \draw[thick] (-3.5,0.5) -- (uc6);
+    \draw[thick] (-3.5,0.5) -- (uc7);
+    \draw[thick] (-3.5,0.5) -- (uc8);
+    \draw[thick] (-3.5,0.5) -- (uc9);
     
-    \draw (worker) -- (uc10);
-    \draw (worker) -- (uc11);
+    \draw[thick] (-3.5,-4.3) -- (uc10);
+    \draw[thick] (-3.5,-4.3) -- (uc11);
 \end{tikzpicture}
 \caption{Діаграма прецедентів інформаційної системи ательє}
 \end{figure}
@@ -224,8 +241,8 @@
 
 \begin{itemize}
     \item \textbf{Оформити замовлення} --- клієнт або адміністратор створює нове замовлення, вказуючи необхідні послуги, матеріали та терміни виконання;
-    \item \textbf{Управління замовленнями} --- адміністратор може створювати, редагувати та видаляти замовлення, призначати виконавців;
-    \item \textbf{Оновити статус замовлення} --- кравець змінює статус замовлення по мірі виконання роботи;
+    \item \textbf{Керування замовленнями} --- адміністратор може створювати, редагувати та видаляти замовлення, призначати виконавців;
+    \item \textbf{Оновити статус} --- кравець змінює статус замовлення по мірі виконання роботи;
     \item \textbf{Формування звітів} --- адміністратор формує різні види звітів для аналізу діяльності.
 \end{itemize}
 
@@ -236,105 +253,149 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[scale=0.85, transform shape]
+\begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
     % Клас Client
-    \begin{class}[text width=4cm]{Client}{0,8}
-        \attribute{- clientId: int}
-        \attribute{- firstName: String}
-        \attribute{- lastName: String}
-        \attribute{- phone: String}
-        \attribute{- email: String}
-        \operation{+ getFullName(): String}
-        \operation{+ getMeasurements(): List}
-    \end{class}
+    \draw[thick] (0,10) rectangle (3.5,13);
+    \node at (1.75,12.7) {\textbf{Client}};
+    \draw[thick] (0,12.5) -- (3.5,12.5);
+    \node[text width=3.2cm, align=left] at (1.75,11.9) {\small
+        - clientId: int\\
+        - firstName: String\\
+        - lastName: String\\
+        - phone: String\\
+        - email: String
+    };
+    \draw[thick] (0,11.2) -- (3.5,11.2);
+    \node[text width=3.2cm, align=left] at (1.75,10.5) {\small
+        + getFullName()\\
+        + getMeasurements()
+    };
     
     % Клас Measurement
-    \begin{class}[text width=4cm]{Measurement}{0,3}
-        \attribute{- measurementId: int}
-        \attribute{- clientId: int}
-        \attribute{- chest: float}
-        \attribute{- waist: float}
-        \attribute{- hips: float}
-        \attribute{- height: float}
-        \attribute{- date: Date}
-        \operation{+ validate(): boolean}
-    \end{class}
+    \draw[thick] (0,6) rectangle (3.5,9);
+    \node at (1.75,8.7) {\textbf{Measurement}};
+    \draw[thick] (0,8.5) -- (3.5,8.5);
+    \node[text width=3.2cm, align=left] at (1.75,7.9) {\small
+        - measurementId: int\\
+        - clientId: int\\
+        - chest: float\\
+        - waist: float\\
+        - height: float
+    };
+    \draw[thick] (0,7.2) -- (3.5,7.2);
+    \node[text width=3.2cm, align=left] at (1.75,6.5) {\small
+        + validate()
+    };
     
     % Клас Order
-    \begin{class}[text width=4.5cm]{Order}{7,8}
-        \attribute{- orderId: int}
-        \attribute{- clientId: int}
-        \attribute{- workerId: int}
-        \attribute{- orderDate: Date}
-        \attribute{- dueDate: Date}
-        \attribute{- status: OrderStatus}
-        \attribute{- totalPrice: decimal}
-        \operation{+ calculatePrice(): decimal}
-        \operation{+ assignWorker(id): void}
-        \operation{+ updateStatus(status): void}
-    \end{class}
-    
-    % Клас OrderItem
-    \begin{class}[text width=4cm]{OrderItem}{7,3}
-        \attribute{- orderItemId: int}
-        \attribute{- orderId: int}
-        \attribute{- serviceId: int}
-        \attribute{- quantity: int}
-        \attribute{- price: decimal}
-        \operation{+ calculateTotal(): decimal}
-    \end{class}
+    \draw[thick] (6,10) rectangle (10,13.5);
+    \node at (8,13.2) {\textbf{Order}};
+    \draw[thick] (6,13) -- (10,13);
+    \node[text width=3.7cm, align=left] at (8,12.1) {\small
+        - orderId: int\\
+        - clientId: int\\
+        - workerId: int\\
+        - orderDate: Date\\
+        - dueDate: Date\\
+        - status: String\\
+        - totalPrice: decimal
+    };
+    \draw[thick] (6,11.2) -- (10,11.2);
+    \node[text width=3.7cm, align=left] at (8,10.5) {\small
+        + calculatePrice()\\
+        + assignWorker()\\
+        + updateStatus()
+    };
     
     % Клас Service
-    \begin{class}[text width=4cm]{Service}{14,8}
-        \attribute{- serviceId: int}
-        \attribute{- name: String}
-        \attribute{- description: String}
-        \attribute{- basePrice: decimal}
-        \attribute{- duration: int}
-        \operation{+ getPrice(): decimal}
-    \end{class}
+    \draw[thick] (12,10) rectangle (15.5,13);
+    \node at (13.75,12.7) {\textbf{Service}};
+    \draw[thick] (12,12.5) -- (15.5,12.5);
+    \node[text width=3.2cm, align=left] at (13.75,11.9) {\small
+        - serviceId: int\\
+        - name: String\\
+        - description: String\\
+        - basePrice: decimal\\
+        - duration: int
+    };
+    \draw[thick] (12,11.2) -- (15.5,11.2);
+    \node[text width=3.2cm, align=left] at (13.75,10.5) {\small
+        + getPrice()
+    };
+    
+    % Клас OrderItem
+    \draw[thick] (6,6) rectangle (10,9);
+    \node at (8,8.7) {\textbf{OrderItem}};
+    \draw[thick] (6,8.5) -- (10,8.5);
+    \node[text width=3.7cm, align=left] at (8,7.7) {\small
+        - orderItemId: int\\
+        - orderId: int\\
+        - serviceId: int\\
+        - quantity: int\\
+        - price: decimal
+    };
+    \draw[thick] (6,7) -- (10,7);
+    \node[text width=3.7cm, align=left] at (8,6.4) {\small
+        + calculateTotal()
+    };
     
     % Клас Worker
-    \begin{class}[text width=4cm]{Worker}{14,3}
-        \attribute{- workerId: int}
-        \attribute{- firstName: String}
-        \attribute{- lastName: String}
-        \attribute{- position: String}
-        \attribute{- phone: String}
-        \attribute{- hireDate: Date}
-        \operation{+ getActiveOrders(): List}
-        \operation{+ getWorkload(): int}
-    \end{class}
+    \draw[thick] (12,6) rectangle (15.5,9);
+    \node at (13.75,8.7) {\textbf{Worker}};
+    \draw[thick] (12,8.5) -- (15.5,8.5);
+    \node[text width=3.2cm, align=left] at (13.75,7.7) {\small
+        - workerId: int\\
+        - firstName: String\\
+        - lastName: String\\
+        - position: String\\
+        - phone: String
+    };
+    \draw[thick] (12,7) -- (15.5,7);
+    \node[text width=3.2cm, align=left] at (13.75,6.4) {\small
+        + getActiveOrders()
+    };
     
     % Клас Material
-    \begin{class}[text width=4cm]{Material}{0,-2}
-        \attribute{- materialId: int}
-        \attribute{- name: String}
-        \attribute{- unit: String}
-        \attribute{- pricePerUnit: decimal}
-        \attribute{- stockQuantity: float}
-        \operation{+ checkAvailability(qty): bool}
-        \operation{+ updateStock(qty): void}
-    \end{class}
+    \draw[thick] (0,2) rectangle (3.5,5);
+    \node at (1.75,4.7) {\textbf{Material}};
+    \draw[thick] (0,4.5) -- (3.5,4.5);
+    \node[text width=3.2cm, align=left] at (1.75,3.7) {\small
+        - materialId: int\\
+        - name: String\\
+        - unit: String\\
+        - pricePerUnit: decimal\\
+        - stockQuantity: float
+    };
+    \draw[thick] (0,3) -- (3.5,3);
+    \node[text width=3.2cm, align=left] at (1.75,2.4) {\small
+        + checkAvailability()
+    };
     
     % Клас MaterialUsage
-    \begin{class}[text width=4cm]{MaterialUsage}{7,-2}
-        \attribute{- usageId: int}
-        \attribute{- orderId: int}
-        \attribute{- materialId: int}
-        \attribute{- quantity: float}
-        \attribute{- cost: decimal}
-        \operation{+ calculateCost(): decimal}
-    \end{class}
+    \draw[thick] (6,2) rectangle (10,5);
+    \node at (8,4.7) {\textbf{MaterialUsage}};
+    \draw[thick] (6,4.5) -- (10,4.5);
+    \node[text width=3.7cm, align=left] at (8,3.7) {\small
+        - usageId: int\\
+        - orderId: int\\
+        - materialId: int\\
+        - quantity: float\\
+        - cost: decimal
+    };
+    \draw[thick] (6,3) -- (10,3);
+    \node[text width=3.7cm, align=left] at (8,2.4) {\small
+        + calculateCost()
+    };
     
     % Зв'язки
-    \draw[umlcd style, ->] (Client) -- (Measurement) node[midway, right] {має};
-    \draw[umlcd style, ->] (Client) -- (Order) node[midway, above] {оформляє};
-    \draw[umlcd style, ->] (Order) -- (OrderItem) node[midway, right] {містить};
-    \draw[umlcd style, ->] (OrderItem) -- (Service) node[midway, above] {використовує};
-    \draw[umlcd style, ->] (Worker) -- (Order) node[midway, right] {виконує};
-    \draw[umlcd style, ->] (Order) -- (MaterialUsage) node[midway, right] {використовує};
-    \draw[umlcd style, ->] (MaterialUsage) -- (Material) node[midway, above] {посилається};
+    \draw[thick, ->] (1.75,10) -- (1.75,9) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (3.5,11.5) -- (6,11.5) node[midway, above] {\small 1..N};
+    \draw[thick, ->] (8,10) -- (8,9) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (10,7.5) -- (12,7.5) node[midway, above] {\small N..1};
+    \draw[thick, ->] (10,11.5) -- (12,11.5) node[midway, above] {\small N..M};
+    \draw[thick, ->] (13.75,6) -- (13.75,4.5) -- (10,4.5) -- (10,9) node[near start, right] {\small 1..N};
+    \draw[thick, ->] (8,6) -- (8,5) node[midway, right] {\small 1..N};
+    \draw[thick, ->] (6,3.5) -- (3.5,3.5) node[midway, above] {\small N..1};
 \end{tikzpicture}
 \caption{Діаграма класів інформаційної системи}
 \end{figure}
@@ -346,41 +407,41 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=2cm, auto]
-    % Стилі
-    \tikzstyle{entity} = [rectangle, draw, fill=blue!20, text width=3cm, text centered, minimum height=1cm]
-    \tikzstyle{relationship} = [diamond, draw, fill=green!20, text width=1.8cm, text centered, minimum height=0.8cm]
+\begin{tikzpicture}[node distance=1cm, auto, scale=0.85, every node/.style={scale=0.85}]
+    % Стилі без кольорів
+    \tikzstyle{entity} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
+    \tikzstyle{relationship} = [diamond, draw, thick, text width=2cm, text centered, minimum height=1cm, aspect=2]
     
     % Сутності
-    \node[entity] (client) {КЛІЄНТ\\(CLIENT)};
-    \node[entity] (order) [right=4cm of client] {ЗАМОВЛЕННЯ\\(ORDER)};
-    \node[entity] (worker) [below=3cm of order] {ПРАЦІВНИК\\(WORKER)};
-    \node[entity] (service) [right=4cm of order] {ПОСЛУГА\\(SERVICE)};
-    \node[entity] (material) [below=3cm of client] {МАТЕРІАЛ\\(MATERIAL)};
-    \node[entity] (measurement) [left=2cm of material] {МІРКИ\\(MEASUREMENT)};
+    \node[entity] (client) at (0,8) {КЛІЄНТ\\(CLIENT)};
+    \node[entity] (order) at (6,8) {ЗАМОВЛЕННЯ\\(ORDER)};
+    \node[entity] (worker) at (6,4) {ПРАЦІВНИК\\(WORKER)};
+    \node[entity] (service) at (12,8) {ПОСЛУГА\\(SERVICE)};
+    \node[entity] (material) at (0,4) {МАТЕРІАЛ\\(MATERIAL)};
+    \node[entity] (measurement) at (0,0) {МІРКИ\\(MEASUREMENT)};
     
     % Зв'язки
-    \node[relationship] (makes) [right=1.5cm of client] {оформляє};
-    \node[relationship] (executes) [right=1.5cm of worker] {виконує};
-    \node[relationship] (includes) [right=1.5cm of order] {включає};
-    \node[relationship] (uses) [below=1.5cm of order] {використовує};
-    \node[relationship] (has) [left=0.7cm of measurement] {має};
+    \node[relationship] (makes) at (3,8) {оформляє};
+    \node[relationship] (executes) at (6,6) {виконує};
+    \node[relationship] (includes) at (9,8) {включає};
+    \node[relationship] (uses) at (3,4) {використовує};
+    \node[relationship] (has) at (0,2) {має};
     
     % Лінії зв'язків
-    \draw (client) -- (makes) node[midway, above] {1};
-    \draw (makes) -- (order) node[midway, above] {N};
+    \draw[thick] (client) -- (makes) node[near start, above] {\small 1};
+    \draw[thick] (makes) -- (order) node[near end, above] {\small N};
     
-    \draw (worker) -- (executes) node[midway, above] {1};
-    \draw (executes) -- (order) node[midway, right] {N};
+    \draw[thick] (worker) -- (executes) node[near start, right] {\small 1};
+    \draw[thick] (executes) -- (order) node[near end, right] {\small N};
     
-    \draw (order) -- (includes) node[midway, above] {N};
-    \draw (includes) -- (service) node[midway, above] {M};
+    \draw[thick] (order) -- (includes) node[near start, above] {\small N};
+    \draw[thick] (includes) -- (service) node[near end, above] {\small M};
     
-    \draw (order) -- (uses) node[midway, right] {N};
-    \draw (uses) -- (material) node[midway, above] {M};
+    \draw[thick] (order.south) -- (6,4.8) -- (3,4.8) -- (uses) node[near end, above] {\small N};
+    \draw[thick] (uses) -- (material) node[near end, above] {\small M};
     
-    \draw (client) -- (has) node[midway, above] {1};
-    \draw (has) -- (measurement) node[midway, above] {N};
+    \draw[thick] (client.south) -- (0,6.5) -- (0,2.5) -- (has) node[near start, right] {\small 1};
+    \draw[thick] (has) -- (measurement) node[near end, right] {\small N};
 \end{tikzpicture}
 \caption{ER-діаграма бази даних}
 \end{figure}
@@ -481,10 +542,10 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=1.5cm]
-    \tikzstyle{startstop} = [ellipse, draw, fill=red!20, minimum width=2cm, minimum height=0.8cm]
-    \tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=3.5cm, text centered, minimum height=1cm]
-    \tikzstyle{decision} = [diamond, draw, fill=green!20, text width=2cm, text centered, aspect=2]
+\begin{tikzpicture}[node distance=1.3cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{startstop} = [ellipse, draw, thick, minimum width=2cm, minimum height=0.8cm]
+    \tikzstyle{process} = [rectangle, draw, thick, text width=3.5cm, text centered, minimum height=1cm]
+    \tikzstyle{decision} = [diamond, draw, thick, text width=2cm, text centered, aspect=2, inner sep=0pt]
     \tikzstyle{arrow} = [thick, ->, >=stealth]
     
     % Вузли
@@ -493,18 +554,18 @@
     \node[process, below of=p1] (p2) {Зняття мірок клієнта};
     \node[process, below of=p2] (p3) {Вибір послуги та матеріалів};
     \node[process, below of=p3] (p4) {Розрахунок вартості};
-    \node[decision, below of=p4, yshift=-0.5cm] (d1) {Клієнт згоден?};
-    \node[process, below of=d1, yshift=-0.8cm] (p5) {Оформлення замовлення};
+    \node[decision, below of=p4, yshift=-0.3cm] (d1) {Клієнт\\згоден?};
+    \node[process, below of=d1, yshift=-0.7cm] (p5) {Оформлення замовлення};
     \node[process, below of=p5] (p6) {Призначення виконавця};
     \node[process, below of=p6] (p7) {Виконання замовлення};
     \node[process, below of=p7] (p8) {Примірка};
-    \node[decision, below of=p8, yshift=-0.5cm] (d2) {Необхідні коригування?};
-    \node[process, below of=d2, yshift=-0.8cm] (p9) {Видача замовлення};
+    \node[decision, below of=p8, yshift=-0.3cm] (d2) {Потрібні\\зміни?};
+    \node[process, below of=d2, yshift=-0.7cm] (p9) {Видача замовлення};
     \node[process, below of=p9] (p10) {Розрахунок з клієнтом};
     \node[startstop, below of=p10] (end) {Кінець};
     
-    \node[process, right of=d1, xshift=3cm] (p11) {Коригування умов};
-    \node[process, right of=d2, xshift=3cm] (p12) {Внесення змін};
+    \node[process, right of=d1, xshift=3.5cm] (p11) {Коригування умов};
+    \node[process, right of=d2, xshift=3.5cm] (p12) {Внесення змін};
     
     % Стрілки
     \draw[arrow] (start) -- (p1);
@@ -512,16 +573,16 @@
     \draw[arrow] (p2) -- (p3);
     \draw[arrow] (p3) -- (p4);
     \draw[arrow] (p4) -- (d1);
-    \draw[arrow] (d1) -- node[right] {так} (p5);
-    \draw[arrow] (d1) -- node[above] {ні} (p11);
-    \draw[arrow] (p11) |- (p3);
+    \draw[arrow] (d1) -- node[right] {\small так} (p5);
+    \draw[arrow] (d1) -- node[above] {\small ні} (p11);
+    \draw[arrow] (p11.north) |- (p3.east);
     \draw[arrow] (p5) -- (p6);
     \draw[arrow] (p6) -- (p7);
     \draw[arrow] (p7) -- (p8);
     \draw[arrow] (p8) -- (d2);
-    \draw[arrow] (d2) -- node[right] {ні} (p9);
-    \draw[arrow] (d2) -- node[above] {так} (p12);
-    \draw[arrow] (p12) |- (p7);
+    \draw[arrow] (d2) -- node[right] {\small ні} (p9);
+    \draw[arrow] (d2) -- node[above] {\small так} (p12);
+    \draw[arrow] (p12.north) |- (p7.east);
     \draw[arrow] (p9) -- (p10);
     \draw[arrow] (p10) -- (end);
 \end{tikzpicture}
@@ -535,26 +596,29 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=2.5cm]
-    \tikzstyle{layer} = [rectangle, draw, fill=blue!20, text width=10cm, text centered, minimum height=1.5cm]
+\begin{tikzpicture}[node distance=2.5cm, scale=0.9, every node/.style={scale=0.9}]
+    \tikzstyle{layer} = [rectangle, draw, thick, text width=10cm, text centered, minimum height=1.8cm]
     
     \node[layer] (presentation) {
         \textbf{Рівень представлення (Presentation Layer)}\\
+        \vspace{0.2cm}
         Веб-інтерфейс / Десктоп додаток
     };
     
-    \node[layer, below of=presentation, fill=green!20] (business) {
+    \node[layer, below of=presentation] (business) {
         \textbf{Рівень бізнес-логіки (Business Logic Layer)}\\
+        \vspace{0.2cm}
         Обробка замовлень, управління клієнтами, розрахунки, звіти
     };
     
-    \node[layer, below of=business, fill=orange!20] (data) {
+    \node[layer, below of=business] (data) {
         \textbf{Рівень даних (Data Access Layer)}\\
+        \vspace{0.2cm}
         База даних (MySQL / PostgreSQL)
     };
     
-    \draw[thick, <->] (presentation) -- (business);
-    \draw[thick, <->] (business) -- (data);
+    \draw[thick, <->, >=stealth] (presentation) -- (business);
+    \draw[thick, <->, >=stealth] (business) -- (data);
 \end{tikzpicture}
 \caption{Трирівнева архітектура системи}
 \end{figure}
@@ -573,25 +637,25 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=2cm]
-    \tikzstyle{component} = [rectangle, draw, fill=blue!20, text width=2.5cm, text centered, minimum height=1cm]
+\begin{tikzpicture}[node distance=2cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{component} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
     
     % Компоненти інтерфейсу
-    \node[component] (ui1) at (0,6) {Модуль\\керування\\клієнтами};
-    \node[component] (ui2) at (3,6) {Модуль\\замовлень};
-    \node[component] (ui3) at (6,6) {Модуль\\складу};
-    \node[component] (ui4) at (9,6) {Модуль\\звітів};
+    \node[component] (ui1) at (0,7) {Модуль\\керування\\клієнтами};
+    \node[component] (ui2) at (3.5,7) {Модуль\\замовлень};
+    \node[component] (ui3) at (7,7) {Модуль\\складу};
+    \node[component] (ui4) at (10.5,7) {Модуль\\звітів};
     
     % Бізнес-логіка
-    \node[component, fill=green!20] (bl1) at (1.5,3.5) {Обробка\\замовлень};
-    \node[component, fill=green!20] (bl2) at (4.5,3.5) {Управління\\даними};
-    \node[component, fill=green!20] (bl3) at (7.5,3.5) {Формування\\звітів};
+    \node[component] (bl1) at (1.75,4) {Обробка\\замовлень};
+    \node[component] (bl2) at (5.25,4) {Управління\\даними};
+    \node[component] (bl3) at (8.75,4) {Формування\\звітів};
     
     % Доступ до даних
-    \node[component, fill=orange!20] (dal) at (4.5,1) {Рівень доступу до даних (DAL)};
+    \node[component, text width=6cm] (dal) at (5.25,1.5) {Рівень доступу до даних (DAL)};
     
     % База даних
-    \node[component, fill=red!20] (db) at (4.5,-1) {База даних};
+    \node[component, text width=6cm] (db) at (5.25,-1) {База даних};
     
     % Зв'язки
     \draw[thick, ->] (ui1) -- (bl1);
@@ -604,7 +668,7 @@
     \draw[thick, ->] (bl2) -- (dal);
     \draw[thick, ->] (bl3) -- (dal);
     
-    \draw[thick, <->] (dal) -- (db);
+    \draw[thick, <->, >=stealth] (dal) -- (db);
 \end{tikzpicture}
 \caption{Діаграма компонентів системи}
 \end{figure}
@@ -616,8 +680,8 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}
-    \tikzstyle{object} = [rectangle, draw, fill=blue!20, text width=2cm, text centered, minimum height=0.8cm]
+\begin{tikzpicture}[scale=0.9, every node/.style={scale=0.8}]
+    \tikzstyle{object} = [rectangle, draw, thick, text width=2.2cm, text centered, minimum height=0.8cm]
     
     % Об'єкти
     \node[object] (admin) at (0,0) {Адміністратор};
@@ -627,30 +691,32 @@
     \node[object] (db) at (12,0) {Database};
     
     % Лінії життя
-    \draw[dashed] (admin) -- (0,-12);
-    \draw[dashed] (ui) -- (3,-12);
-    \draw[dashed] (controller) -- (6,-12);
-    \draw[dashed] (service) -- (9,-12);
-    \draw[dashed] (db) -- (12,-12);
+    \draw[dashed, thick] (admin) -- (0,-14);
+    \draw[dashed, thick] (ui) -- (3,-14);
+    \draw[dashed, thick] (controller) -- (6,-14);
+    \draw[dashed, thick] (service) -- (9,-14);
+    \draw[dashed, thick] (db) -- (12,-14);
     
     % Повідомлення
-    \draw[->, thick] (0,-1) -- node[above, sloped] {\tiny введення даних} (3,-1.5);
-    \draw[->, thick] (3,-2) -- node[above, sloped] {\tiny createOrder()} (6,-2.5);
-    \draw[->, thick] (6,-3) -- node[above, sloped] {\tiny validateData()} (9,-3.5);
-    \draw[<-, thick] (6,-4) -- node[below, sloped] {\tiny valid} (9,-4);
+    \draw[->, thick] (0,-1) -- node[above, sloped] {\tiny введення даних} (3,-1.8);
     
-    \draw[->, thick] (6,-4.5) -- node[above, sloped] {\tiny getClient()} (9,-5);
-    \draw[->, thick] (9,-5.5) -- node[above, sloped] {\tiny SELECT} (12,-6);
-    \draw[<-, thick] (9,-6.5) -- node[below, sloped] {\tiny clientData} (12,-6.5);
-    \draw[<-, thick] (6,-7) -- node[below, sloped] {\tiny client} (9,-7);
+    \draw[->, thick] (3,-2.2) -- node[above, sloped] {\tiny createOrder()} (6,-3);
     
-    \draw[->, thick] (6,-7.5) -- node[above, sloped] {\tiny saveOrder()} (9,-8);
-    \draw[->, thick] (9,-8.5) -- node[above, sloped] {\tiny INSERT} (12,-9);
-    \draw[<-, thick] (9,-9.5) -- node[below, sloped] {\tiny orderId} (12,-9.5);
-    \draw[<-, thick] (6,-10) -- node[below, sloped] {\tiny success} (9,-10);
+    \draw[->, thick] (6,-3.4) -- node[above, sloped] {\tiny validateData()} (9,-4.2);
+    \draw[<-, thick] (6,-4.6) -- node[below, sloped] {\tiny valid} (9,-4.6);
     
-    \draw[<-, thick] (3,-10.5) -- node[below, sloped] {\tiny orderCreated} (6,-10.5);
-    \draw[<-, thick] (0,-11) -- node[below, sloped] {\tiny підтвердження} (3,-11.5);
+    \draw[->, thick] (6,-5.2) -- node[above, sloped] {\tiny getClient(id)} (9,-6);
+    \draw[->, thick] (9,-6.4) -- node[above, sloped] {\tiny SELECT} (12,-7.2);
+    \draw[<-, thick] (9,-7.6) -- node[below, sloped] {\tiny clientData} (12,-7.6);
+    \draw[<-, thick] (6,-8) -- node[below, sloped] {\tiny client} (9,-8);
+    
+    \draw[->, thick] (6,-8.6) -- node[above, sloped] {\tiny saveOrder()} (9,-9.4);
+    \draw[->, thick] (9,-9.8) -- node[above, sloped] {\tiny INSERT} (12,-10.6);
+    \draw[<-, thick] (9,-11) -- node[below, sloped] {\tiny orderId} (12,-11);
+    \draw[<-, thick] (6,-11.4) -- node[below, sloped] {\tiny success} (9,-11.4);
+    
+    \draw[<-, thick] (3,-12) -- node[below, sloped] {\tiny orderCreated} (6,-12);
+    \draw[<-, thick] (0,-12.8) -- node[below, sloped] {\tiny підтвердження} (3,-13.4);
 \end{tikzpicture}
 \caption{Діаграма послідовності: створення замовлення}
 \end{figure}
@@ -662,34 +728,34 @@
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=3cm, auto]
-    \tikzstyle{state} = [rectangle, rounded corners, draw, fill=blue!20, text width=2.5cm, text centered, minimum height=1cm]
-    \tikzstyle{initial} = [circle, draw, fill=black, minimum size=0.3cm]
-    \tikzstyle{final} = [circle, draw, double, minimum size=0.5cm]
+\begin{tikzpicture}[node distance=2.8cm, auto, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{state} = [rectangle, rounded corners, draw, thick, text width=2.8cm, text centered, minimum height=1.2cm]
+    \tikzstyle{initial} = [circle, draw, thick, fill=black, minimum size=0.4cm]
+    \tikzstyle{final} = [circle, draw, thick, double, minimum size=0.6cm]
     
     % Стани
     \node[initial] (init) {};
     \node[state] (new) [right of=init, xshift=-1cm] {Новий};
     \node[state] (accepted) [below of=new] {Прийнято\\в роботу};
-    \node[state] (inprogress) [right of=accepted, xshift=1cm] {В процесі\\виконання};
+    \node[state] (inprogress) [right of=accepted, xshift=1.5cm] {В процесі\\виконання};
     \node[state] (fitting) [below of=accepted] {Примірка};
-    \node[state] (ready) [right of=fitting, xshift=1cm] {Готовий};
+    \node[state] (ready) [right of=fitting, xshift=1.5cm] {Готовий};
     \node[state] (completed) [below of=fitting] {Виданий};
-    \node[state] (cancelled) [left of=fitting, xshift=-1cm] {Скасовано};
+    \node[state] (cancelled) [left of=fitting, xshift=-1.5cm] {Скасовано};
     \node[final] (end) [below of=completed] {};
     
     % Переходи
-    \draw[->, thick] (init) -- (new);
-    \draw[->, thick] (new) -- node[right] {призначити виконавця} (accepted);
-    \draw[->, thick] (accepted) -- node[above] {почати роботу} (inprogress);
-    \draw[->, thick] (inprogress) -- (fitting) node[midway, right] {завершити пошиття};
-    \draw[->, thick] (fitting) -- node[above] {підтвердити} (ready);
-    \draw[->, thick] (fitting) .. controls +(up:2cm) and +(right:2cm) .. node[right] {потрібні зміни} (inprogress);
-    \draw[->, thick] (ready) -- (completed) node[midway, right] {видати клієнту};
-    \draw[->, thick] (completed) -- (end);
-    \draw[->, thick] (new) -- (cancelled) node[midway, above] {скасувати};
-    \draw[->, thick] (accepted) -- (cancelled) node[midway, above] {скасувати};
-    \draw[->, thick] (cancelled) -- (end);
+    \draw[->, thick, >=stealth] (init) -- (new);
+    \draw[->, thick, >=stealth] (new) -- node[right] {\tiny призначити} (accepted);
+    \draw[->, thick, >=stealth] (accepted) -- node[above] {\tiny почати} (inprogress);
+    \draw[->, thick, >=stealth] (inprogress) -- node[right] {\tiny завершити} (fitting);
+    \draw[->, thick, >=stealth] (fitting) -- node[above] {\tiny OK} (ready);
+    \draw[->, thick, >=stealth] (fitting.east) .. controls +(right:1.5cm) and +(right:1.5cm) .. node[right] {\tiny зміни} (inprogress.east);
+    \draw[->, thick, >=stealth] (ready) -- (completed);
+    \draw[->, thick, >=stealth] (completed) -- (end);
+    \draw[->, thick, >=stealth] (new) -- node[above] {\tiny скасувати} (cancelled);
+    \draw[->, thick, >=stealth] (accepted) -- (cancelled);
+    \draw[->, thick, >=stealth] (cancelled) -- (end);
 \end{tikzpicture}
 \caption{Діаграма станів замовлення}
 \end{figure}
@@ -764,8 +830,8 @@ atelier-system/
 \newpage
 \subsection{SQL-скрипти створення таблиць}
 
-\begin{lstlisting}[language=SQL, caption=Створення таблиць бази даних, basicstyle=\small\ttfamily, breaklines=true]
--- Таблиця клієнтів
+\begin{lstlisting}[language=SQL, caption=Створення таблиць бази даних, basicstyle=\small\ttfamily, breaklines=true, frame=single]
+-- Tablycya klientiv
 CREATE TABLE client (
     client_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -776,7 +842,7 @@ CREATE TABLE client (
     notes TEXT
 );
 
--- Таблиця мірок
+-- Tablycya mirok
 CREATE TABLE measurement (
     measurement_id SERIAL PRIMARY KEY,
     client_id INTEGER REFERENCES client(client_id),
@@ -787,7 +853,7 @@ CREATE TABLE measurement (
     measurement_date DATE DEFAULT CURRENT_DATE
 );
 
--- Таблиця працівників
+-- Tablycya pratsivnykiv
 CREATE TABLE worker (
     worker_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -798,7 +864,7 @@ CREATE TABLE worker (
     salary DECIMAL(10,2)
 );
 
--- Таблиця послуг
+-- Tablycya posluh
 CREATE TABLE service (
     service_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -807,8 +873,11 @@ CREATE TABLE service (
     duration_hours INTEGER,
     category VARCHAR(50)
 );
+\end{lstlisting}
 
--- Таблиця замовлень
+\newpage
+\begin{lstlisting}[language=SQL, caption=Продовження створення таблиць, basicstyle=\small\ttfamily, breaklines=true, frame=single]
+-- Tablycya zamovlen
 CREATE TABLE "order" (
     order_id SERIAL PRIMARY KEY,
     client_id INTEGER REFERENCES client(client_id),
@@ -821,7 +890,7 @@ CREATE TABLE "order" (
     notes TEXT
 );
 
--- Таблиця позицій замовлення
+-- Tablycya pozytsiy zamovlennya
 CREATE TABLE order_item (
     order_item_id SERIAL PRIMARY KEY,
     order_id INTEGER REFERENCES "order"(order_id),
@@ -831,7 +900,7 @@ CREATE TABLE order_item (
     description TEXT
 );
 
--- Таблиця матеріалів
+-- Tablycya materialiv
 CREATE TABLE material (
     material_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -842,7 +911,7 @@ CREATE TABLE material (
     supplier VARCHAR(100)
 );
 
--- Таблиця використання матеріалів
+-- Tablycya vykorystannya materialiv
 CREATE TABLE material_usage (
     usage_id SERIAL PRIMARY KEY,
     order_id INTEGER REFERENCES "order"(order_id),
@@ -858,7 +927,7 @@ CREATE TABLE material_usage (
 
 \textbf{Клас Order (Java):}
 
-\begin{lstlisting}[language=Java, caption=Клас Order, basicstyle=\small\ttfamily, breaklines=true]
+\begin{lstlisting}[language=Java, caption=Клас Order, basicstyle=\small\ttfamily, breaklines=true, frame=single]
 public class Order {
     private int orderId;
     private int clientId;
@@ -878,12 +947,14 @@ public class Order {
     public BigDecimal calculateTotalPrice(
         List<OrderItem> items, 
         List<MaterialUsage> materials) {
+        
         BigDecimal total = BigDecimal.ZERO;
         
         for (OrderItem item : items) {
             total = total.add(
-                item.getPrice()
-                    .multiply(new BigDecimal(item.getQuantity()))
+                item.getPrice().multiply(
+                    new BigDecimal(item.getQuantity())
+                )
             );
         }
         
@@ -898,7 +969,7 @@ public class Order {
         if (this.status == OrderStatus.COMPLETED || 
             this.status == OrderStatus.CANCELLED) {
             throw new IllegalStateException(
-                "Cannot change status of completed or cancelled order"
+                "Cannot change completed order status"
             );
         }
         this.status = newStatus;
@@ -907,8 +978,6 @@ public class Order {
             this.completionDate = LocalDate.now();
         }
     }
-    
-    // Getters and Setters...
 }
 \end{lstlisting}
 
@@ -1099,41 +1168,46 @@ public class Order {
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[node distance=3cm]
-    \tikzstyle{node} = [rectangle, draw, fill=blue!20, text width=3cm, text centered, minimum height=1.5cm]
-    \tikzstyle{component} = [rectangle, draw, fill=green!20, text width=2.5cm, text centered, minimum height=0.8cm]
+\begin{tikzpicture}[node distance=2.5cm, scale=0.85, every node/.style={scale=0.85}]
+    \tikzstyle{node} = [rectangle, draw, thick, text width=3.2cm, text centered, minimum height=1.5cm]
+    \tikzstyle{component} = [rectangle, draw, thick, text width=2.8cm, text centered, minimum height=0.8cm]
     
     % Вузли
     \node[node] (client) {
-        \textbf{Клієнтський комп'ютер}\\
+        \textbf{Клієнтський}\\
+        \textbf{комп'ютер}\\
+        \vspace{0.1cm}
         \small{Windows/Linux}
     };
     
-    \node[node, below of=client, yshift=-1cm] (webserver) {
+    \node[node, below of=client, yshift=-0.5cm] (webserver) {
         \textbf{Веб-сервер}\\
+        \vspace{0.1cm}
         \small{Apache/Nginx}
     };
     
     \node[node, left of=webserver, xshift=-2cm] (appserver) {
         \textbf{Сервер додатків}\\
+        \vspace{0.1cm}
         \small{Tomcat/Node.js}
     };
     
     \node[node, right of=webserver, xshift=2cm] (dbserver) {
         \textbf{Сервер БД}\\
+        \vspace{0.1cm}
         \small{PostgreSQL}
     };
     
     % Компоненти
-    \node[component, below of=client, yshift=1cm] (browser) {Веб-браузер};
-    \node[component, below of=webserver, yshift=1cm] (frontend) {Frontend};
-    \node[component, below of=appserver, yshift=1cm] (backend) {Backend API};
-    \node[component, below of=dbserver, yshift=1cm] (database) {База даних};
+    \node[component, below of=client, yshift=1.3cm] (browser) {Веб-браузер};
+    \node[component, below of=webserver, yshift=1.3cm] (frontend) {Frontend};
+    \node[component, below of=appserver, yshift=1.3cm] (backend) {Backend API};
+    \node[component, below of=dbserver, yshift=1.3cm] (database) {База даних};
     
     % Зв'язки
-    \draw[thick, <->] (client) -- node[right] {HTTP/HTTPS} (webserver);
-    \draw[thick, <->] (webserver) -- node[above] {REST API} (appserver);
-    \draw[thick, <->] (appserver) -- node[above] {SQL} (dbserver);
+    \draw[thick, <->, >=stealth] (client) -- node[right] {\small HTTP/HTTPS} (webserver);
+    \draw[thick, <->, >=stealth] (webserver) -- node[above] {\small REST API} (appserver);
+    \draw[thick, <->, >=stealth] (appserver) -- node[above] {\small SQL} (dbserver);
 \end{tikzpicture}
 \caption{Діаграма розгортання системи}
 \end{figure}
