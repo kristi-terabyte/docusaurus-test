@@ -1,0 +1,117 @@
+% !TEX program = lualatex
+\documentclass[14pt,a4paper]{extarticle}
+
+% Ukrainian and DSTU-friendly setup
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{ukrainian}
+\setotherlanguage{english}
+% Portability-friendly TeX Gyre fonts (Times/Arial/Courier compatible)
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,calc}
+
+% Bibliography (DSTU-like numeric style via biblatex-gost)
+\usepackage[backend=biber,style=gost-numeric,language=auto,autolang=other]{biblatex}
+\addbibresource{references.bib}
+
+% Title page variables (change to match your university DSTU requirements)
+\newcommand{\University}{Назва закладу вищої освіти}
+\newcommand{\Faculty}{Факультет/Інститут}
+\newcommand{\Department}{Кафедра}
+\newcommand{\WorkType}{Курсова робота}
+\newcommand{\Topic}{Інформаційна система ательє}
+\newcommand{\Discipline}{З дисципліни: Об'єктно-орієнтоване проєктування}
+\newcommand{\Student}{Прізвище Ім'я По батькові}
+\newcommand{\Group}{Група ХХ-ХХ}
+\newcommand{\Supervisor}{Науковий керівник, ст. посада, ПІБ}
+\newcommand{\City}{Місто}
+\newcommand{\Year}{2025}
+
+% Title page per DSTU
+\pretitle{\begin{center}\large \University\\ \Faculty\\ \Department\\[2cm] \WorkType \\[0.5cm] \textbf{\Topic}\\[0.5cm] \Discipline \\[3cm]}
+\posttitle{\par\end{center}}
+\preauthor{\begin{flushright}}
+\postauthor{\end{flushright}}
+\author{\begin{tabular}{@{}l@{}}Виконав(ла): \\ студент(ка) \Group \\ \Student \\[0.5cm] Керівник: \\ \Supervisor\end{tabular}}
+\date{\vfill \begin{center}\City~\Year\end{center}}
+
+% Formatting TOC per DSTU rough requirements
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setcounter{tocdepth}{2}
+
+% Figure and table captions in Ukrainian
+\addto\captionsukrainian{\renewcommand{\figurename}{Рис.}}
+\addto\captionsukrainian{\renewcommand{\tablename}{Табл.}}
+\addto\captionsukrainian{\renewcommand{\contentsname}{ЗМІСТ}}
+
+\begin{document}
+
+% Title page
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+% ЗМІСТ (Table of contents)
+\pagenumbering{roman}
+\setcounter{page}{2}
+\tableofcontents
+\clearpage
+
+% Перелік умовних позначень, скорочень (optional)
+\section*{Перелік умовних позначень, скорочень}
+\addcontentsline{toc}{section}{Перелік умовних позначень, скорочень}
+API — прикладний програмний інтерфейс; БД — база даних; UML — мова уніфікованого моделювання.
+\clearpage
+
+% Вступ
+\pagenumbering{arabic}
+\input{sections/01-vstup}
+
+% 1. Аналіз предметної області та вимог
+\input{sections/02-analiz}
+
+% 2. Проєктування системи (діаграми)
+\input{sections/03-proektuvannia}
+
+% 3. Реалізація (стисло)
+\input{sections/04-realizaciya}
+
+% 4. Тестування (стисло)
+\input{sections/05-testuvannia}
+
+% Висновки
+\input{sections/06-vysnovky}
+
+% Список використаних джерел
+\printbibliography[heading=bibintoc,title={Список використаних джерел}]
+
+% Додатки (за потреби)
+% \appendix
+% \section{Додаток А}
+
+\end{document}
