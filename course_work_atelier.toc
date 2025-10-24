@@ -20,13 +20,31 @@
 \contentsline {section}{\numberline {4}РЕАЛІЗАЦІЯ СИСТЕМИ}{17}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Технології та інструменти}{17}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Структура проекту}{18}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}SQL-скрипти створення таблиць}{19}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Приклади коду}{23}{subsection.4.4}%
-\contentsline {section}{\numberline {5}ТЕСТУВАННЯ ТА ВПРОВАДЖЕННЯ}{25}{section.5}%
-\contentsline {subsection}{\numberline {5.1}План тестування}{25}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Приклади тестових сценаріїв}{25}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Впровадження системи}{26}{subsection.5.3}%
-\contentsline {section}{\numberline {6}ВИСНОВКИ}{28}{section.6}%
-\contentsline {section}{\numberline {7}СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}{30}{section.7}%
-\contentsline {section}{\numberline {\CYRA }ДОДАТОК А. Діаграма розгортання}{31}{appendix.Alph1}%
-\contentsline {section}{\numberline {\CYRB }ДОДАТОК Б. Словник термінів}{31}{appendix.Alph2}%
+\contentsline {subsection}{\numberline {4.3}SQL-скрипти створення таблиць}{20}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Приклади коду}{24}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Реалізація репозиторіїв на C\#}{27}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Конфігурація Entity Framework Core}{30}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}API контролери на ASP.NET Core}{32}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Додаткові діаграми системи}{35}{subsection.4.8}%
+\contentsline {section}{\numberline {5}SQL ЗАПИТИ ТА СЕРВІСНА ЛОГІКА}{37}{section.5}%
+\contentsline {subsection}{\numberline {5.1}SQL запити для роботи з базою даних}{37}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Сервісний шар на C\#}{50}{subsection.5.2}%
+\contentsline {section}{\numberline {6}ТЕСТУВАННЯ ТА ВПРОВАДЖЕННЯ}{53}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Plan тестування}{53}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Приклади тестових сценаріїв}{53}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Модульне тестування на C\#}{55}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Інтеграційне тестування}{58}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Конфігурація та Dependency Injection}{61}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Конфігурація підключення до бази даних}{63}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Міграції бази даних}{63}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}Безпека та автентифікація}{66}{subsection.6.8}%
+\contentsline {subsection}{\numberline {6.9}Впровадження системи}{68}{subsection.6.9}%
+\contentsline {section}{\numberline {7}ЗВІТНІСТЬ ТА МОНІТОРИНГ}{69}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Система звітів}{69}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Логування та моніторинг}{72}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Обробка помилок}{74}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Кешування даних}{76}{subsection.7.4}%
+\contentsline {section}{\numberline {8}ВИСНОВКИ}{78}{section.8}%
+\contentsline {section}{\numberline {9}СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}{80}{section.9}%
+\contentsline {section}{\numberline {\CYRA }ДОДАТОК А. Діаграма розгортання}{82}{appendix.Alph1}%
+\contentsline {section}{\numberline {\CYRB }ДОДАТОК Б. Словник термінів}{82}{appendix.Alph2}%
