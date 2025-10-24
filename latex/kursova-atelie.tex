@@ -1,0 +1,288 @@
+% !TEX program = xelatex
+\documentclass[14pt,a4paper]{extarticle}
+
+% Ukrainian and DSTU-friendly setup
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{ukrainian}
+\setotherlanguage{english}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\usepackage{enumitem}
+\setlist{nosep}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,shapes.geometric,calc}
+
+% Title page variables (edit as needed)
+\newcommand{\University}{Назва закладу вищої освіти}
+\newcommand{\Faculty}{Факультет/Інститут}
+\newcommand{\Department}{Кафедра}
+\newcommand{\WorkType}{Курсова робота}
+\newcommand{\Topic}{Інформаційна система ательє}
+\newcommand{\Discipline}{З дисципліни: Об'єктно-орієнтоване проєктування}
+\newcommand{\Student}{Прізвище Ім'я По батькові}
+\newcommand{\Group}{Група ХХ-ХХ}
+\newcommand{\Supervisor}{Науковий керівник, ст. посада, ПІБ}
+\newcommand{\City}{Місто}
+\newcommand{\Year}{2025}
+
+% Title page per DSTU
+\pretitle{\begin{center}\large \University\\ \Faculty\\ \Department\\[2cm] \WorkType \\[0.5cm] \textbf{\Topic}\\[0.5cm] \Discipline \\[3cm]}
+\posttitle{\par\end{center}}
+\preauthor{\begin{flushright}}
+\postauthor{\end{flushright}}
+\author{\begin{tabular}{@{}l@{}}Виконав(ла): \\ студент(ка) \Group \\ \Student \\[0.5cm] Керівник: \\ \Supervisor\end{tabular}}
+\date{\vfill \begin{center}\City~\Year\end{center}}
+
+% TOC formatting
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setcounter{tocdepth}{2}
+
+% Captions in Ukrainian
+\addto\captionsukrainian{\renewcommand{\figurename}{Рис.}}
+\addto\captionsukrainian{\renewcommand{\tablename}{Табл.}}
+\addto\captionsukrainian{\renewcommand{\contentsname}{ЗМІСТ}}
+
+\begin{document}
+
+% Title page
+\maketitle
+\thispagestyle{empty}
+\clearpage
+
+% TOC
+\pagenumbering{roman}
+\setcounter{page}{2}
+\tableofcontents
+\clearpage
+
+% Abbreviations
+\section*{Перелік умовних позначень, скорочень}
+\addcontentsline{toc}{section}{Перелік умовних позначень, скорочень}
+API — прикладний програмний інтерфейс; БД — база даних; UML — мова уніфікованого моделювання.
+\clearpage
+
+% Intro
+\pagenumbering{arabic}
+\section{Вступ}
+Метою курсової роботи є розроблення та документування інформаційної системи ательє, що підтримує процеси прийому замовлень, обліку клієнтів, ведення номенклатури послуг та матеріалів, планування завантаження майстрів і розрахунку вартості робіт.
+
+Актуальність теми обумовлена потребою малих підприємств сфери побутового обслуговування в цифровізації обліку та процесів, підвищенні прозорості взаємодії з клієнтами та оптимізації ресурсів.
+
+Об'єкт дослідження — процеси діяльності ательє з пошиття та ремонту одягу. Предмет дослідження — методи аналізу вимог і проєктування програмних систем із використанням нотацій UML і ER.
+
+Структура роботи відповідає вимогам ДСТУ та включає аналіз предметної області, формалізацію вимог, проєктування (діаграми прецедентів, активності, класів, компонентів, послідовностей, ER-діаграму), стислий опис реалізації, підходи до тестування та висновки.
+
+\section{Аналіз предметної області та вимог}
+\subsection{Опис предметної області}
+Ательє надає послуги з пошиття та ремонту виробів. Основні сутності: клієнт, замовлення, виріб, послуга, матеріал, майстер, платіж. Замовлення має статуси: нове, у роботі, готове, видане, скасоване.
+
+\subsection{Зацікавлені сторони}
+\begin{itemize}
+  \item Клієнт — оформлює замовлення, отримує виріб, здійснює оплату;
+  \item Адміністратор — приймає замовлення, веде клієнтську базу, формує рахунки;
+  \item Майстер — виконує роботи, фіксує етапи та витрати матеріалів;
+  \item Власник — аналізує звітність, встановлює прайс-листи.
+\end{itemize}
+
+\subsection{Функціональні вимоги}
+\begin{itemize}
+  \item Реєстрація клієнтів та їх контактних даних;
+  \item Оформлення замовлень з переліком робіт і матеріалів;
+  \item Калькуляція вартості; облік платежів (передплата, остаточний розрахунок);
+  \item Планування та відстеження етапів виконання робіт;
+  \item Формування звітів (виручка, завантаженість майстрів, популярні послуги).
+\end{itemize}
+
+\subsection{Нефункціональні вимоги}
+\begin{itemize}
+  \item Зручність інтерфейсу для настільних браузерів;
+  \item Збереження даних у реляційній БД; резервне копіювання;
+  \item Аудит змін замовлень та платежів;
+  \item Ролі та доступи (адміністратор, майстер, власник).
+\end{itemize}
+
+\section{Проєктування системи}
+\subsection{Діаграма прецедентів}
+На рис.~\ref{fig:usecase} подано узагальнену діаграму прецедентів.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    % Actors
+    \node (client) [draw, rounded corners, align=center] {Актор\\Клієнт};
+    \node (admin) [draw, rounded corners, align=center, below=of client] {Актор\\Адміністратор};
+    \node (master) [draw, rounded corners, align=center, below=of admin] {Актор\\Майстер};
+    % System boundary
+    \node (sys) [draw, minimum width=9cm, minimum height=6cm, right=3.8cm of admin] {};
+    \node at ($(sys.north)+(0,-0.4)$) {ІС Ательє};
+    % Use cases
+    \node (uc1) at ($(sys.west)!0.5!(sys.east)+(0,1.8)$) [draw, ellipse, align=center, minimum width=3.8cm] {Оформити\\замовлення};
+    \node (uc2) [draw, ellipse, below=1.1cm of uc1, minimum width=3.8cm, align=center] {Розрахувати\\вартість};
+    \node (uc3) [draw, ellipse, below=1.1cm of uc2, minimum width=3.8cm, align=center] {Виконати\\роботи};
+    \node (uc4) [draw, ellipse, below=1.1cm of uc3, minimum width=3.8cm, align=center] {Облік\\платежів};
+    % Associations
+    \draw[-{Latex}] (client.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) -- (uc1.west);
+    \draw[-{Latex}] (admin.east) |- (uc2.west);
+    \draw[-{Latex}] (master.east) -- (uc3.west);
+    \draw[-{Latex}] (admin.east) |- (uc4.west);
+  \end{tikzpicture}
+  \caption{Діаграма прецедентів для ІС ательє}
+  \label{fig:usecase}
+\end{figure}
+
+\subsection{Діаграма активності: обробка замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.4cm]
+    \tikzset{act/.style={draw,rounded corners,minimum width=3.6cm,align=center}};
+    \node (start) [circle, fill=black, minimum size=6pt, inner sep=0pt] {};
+    \node (a1) [act, below=of start] {Прийняти замовлення};
+    \node (a2) [act, below=of a1] {Оцінити вартість \\ і терміни};
+    \node (a3) [act, below=of a2] {Призначити майстра};
+    \node (a4) [act, below=of a3] {Виконати роботи};
+    \node (a5) [act, below=of a4] {Прийняти оплату \\ і видати виріб};
+    \node (end) [circle, draw, minimum size=8pt, inner sep=0pt, below=of a5] {};
+    \draw[-{Latex}] (start) -- (a1);
+    \draw[-{Latex}] (a1) -- (a2);
+    \draw[-{Latex}] (a2) -- (a3);
+    \draw[-{Latex}] (a3) -- (a4);
+    \draw[-{Latex}] (a4) -- (a5);
+    \draw[-{Latex}] (a5) -- (end);
+  \end{tikzpicture}
+  \caption{Діаграма активності процесу замовлення}
+  \label{fig:activity}
+\end{figure}
+
+\subsection{Діаграма класів}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{class/.style={draw,rectangle,minimum width=4cm,align=left}}
+    \node (clientc) [class] {\textbf{Клієнт}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+телефон: string};
+    \node (order) [class, right=3.5cm of clientc] {\textbf{Замовлення}\\\hrulefill\\+id: UUID\\+дата: date\\+статус: enum\\+сума: money};
+    \node (service) [class, below=of order] {\textbf{Послуга}\\\hrulefill\\+id: UUID\\+назва: string\\+ціна: money};
+    \node (master) [class, below=of clientc] {\textbf{Майстер}\\\hrulefill\\+id: UUID\\+ПІБ: string\\+кваліфікація: string};
+
+    % Relations
+    \draw[-{Latex}] (clientc) -- node[above,sloped]{1..*} (order);
+    \draw[-{Latex}] (order) -- node[right]{*} (service);
+    \draw[-{Latex}] (master) -- node[above,sloped]{1..*} (order);
+  \end{tikzpicture}
+  \caption{Спрощена діаграма класів}
+  \label{fig:class}
+\end{figure}
+
+\subsection{Діаграма послідовностей: оформлення замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=0.8cm]
+    \tikzset{lifeline/.style={draw,minimum width=2.4cm,align=center}}
+    \node (actor) [lifeline] {Клієнт};
+    \node (ui) [lifeline, right=2.5cm of actor] {UI};
+    \node (svc) [lifeline, right=2.5cm of ui] {Сервіс};
+    \node (db) [lifeline, right=2.5cm of svc] {БД};
+
+    % Lifelines
+    \draw[dashed] (actor.south) -- ++(0,-5.5);
+    \draw[dashed] (ui.south) -- ++(0,-5.5);
+    \draw[dashed] (svc.south) -- ++(0,-5.5);
+    \draw[dashed] (db.south) -- ++(0,-5.5);
+
+    % Messages
+    \draw[-{Latex}] (actor) -- node[above]{ввести дані} (ui);
+    \draw[-{Latex}] (ui) -- node[above]{createOrder()} (svc);
+    \draw[-{Latex}] (svc) -- node[above]{INSERT} (db);
+    \draw[-{Latex}] (db) -- node[below]{OK} (svc);
+    \draw[-{Latex}] (svc) -- node[below]{orderId} (ui);
+    \draw[-{Latex}] (ui) -- node[below]{підтвердження} (actor);
+  \end{tikzpicture}
+  \caption{Діаграма послідовностей}
+  \label{fig:sequence}
+\end{figure}
+
+\subsection{ER-діаграма бази даних}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{ent/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \tikzset{rel/.style={draw,diamond,aspect=2,align=center,inner sep=1pt}};
+
+    \node (client) [ent] {CLIENT\\id, name, phone};
+    \node (orderent) [ent, right=3.5cm of client] {ORDER\\id, date, status, sum, clientId};
+    \node (serviceent) [ent, below=of orderent] {SERVICE\\id, title, price};
+    \node (orderitem) [ent, below=of client] {ORDER\_ITEM\\orderId, serviceId, qty, price};
+
+    \node (r1) [rel, right=1.6cm of client] {places};
+    \node (r2) [rel, below=0.8cm of r1] {contains};
+
+    \draw (client) -- node[above]{1} (r1);
+    \draw (r1) -- node[above]{N} (orderent);
+    \draw (orderent) -- node[right]{1} (r2);
+    \draw (r2) -- node[right]{N} (orderitem);
+    \draw (serviceent) -- node[right]{1} (r2);
+  \end{tikzpicture}
+  \caption{ER-діаграма БД}
+  \label{fig:er}
+\end{figure}
+
+\subsection{Діаграма компонентів (структури)}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=1.6cm]
+    \tikzset{comp/.style={draw,rectangle,minimum width=3.8cm,align=center}};
+    \node (web) [comp] {Web UI};
+    \node (api) [comp, right=3.5cm of web] {REST API};
+    \node (dbcomp) [comp, right=3.5cm of api] {RDBMS};
+
+    \draw[-{Latex}] (web) -- (api);
+    \draw[-{Latex}] (api) -- (dbcomp);
+  \end{tikzpicture}
+  \caption{Діаграма компонентів}
+  \label{fig:components}
+\end{figure}
+
+\section{Реалізація}
+Програмна реалізація може бути виконана у вигляді веб-додатка з архітектурою клієнт–сервер. Клієнтська частина (наприклад, React) взаємодіє з серверним REST API (наприклад, Node.js/Express, Java Spring або Python FastAPI), дані зберігаються у реляційній СУБД (PostgreSQL/MySQL). Аутентифікація може базуватися на JWT, авторизація — на ролях.
+
+\section{Тестування}
+Запропоновано рівні тестування: модульне (сервісні методи калькуляції, валідації), інтеграційне (взаємодія API та БД), системне (сценарії оформлення замовлення, оплати), приймальне (з користувачами). Для нефункціональних аспектів — навантажувальне тестування ключових ендпойнтів.
+
+\section{Висновки}
+Було проаналізовано предметну область ательє, уточнено вимоги та розроблено модель системи за допомогою UML і ER-діаграм. Запропоновано архітектуру рішення та підходи до тестування. Результати можуть бути використані як основа для подальшої детальної реалізації.
+
+\section*{Список використаних джерел}
+\addcontentsline{toc}{section}{Список використаних джерел}
+\begin{thebibliography}{9}
+\bibitem{fowler}
+М. Фаулер. UML Distilled: A Brief Guide to the Standard Object Modeling Language. Addison-Wesley, 2003.
+
+\bibitem{connolly}
+Т. Конноллі, К. Бегг. Database Systems: A Practical Approach to Design, Implementation, and Management. Pearson, 2014.
+
+\bibitem{dstu}
+Вимоги до оформлення кваліфікаційних робіт за ДСТУ. Доступ: \url{https://example.edu/dstu-guidelines} (дата звернення: 24.10.2025).
+\end{thebibliography}
+
+\end{document}
