@@ -21,7 +21,7 @@
 \usepackage{enumitem}
 \usepackage{amsmath,amssymb}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc,fit,backgrounds}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc,shapes.symbols,fit,backgrounds}
 
 % Зручні стилі для діаграм
 \tikzset{
@@ -29,7 +29,7 @@
   usecase/.style={draw,ellipse,minimum height=8mm,minimum width=24mm,fill=blue!5},
   comp/.style={draw,rectangle,rounded corners,fill=green!5,minimum width=28mm,minimum height=10mm},
   db/.style={draw, cylinder, shape border rotate=90, aspect=0.2, minimum height=13mm, minimum width=10mm, fill=orange!10},
-  entity/.style={draw,rectangle,fill=yellow!10,rounded corners},
+  entity/.style={draw,rectangle,fill=yellow!10,rounded corners,align=left},
   class/.style={draw,rectangle,fill=purple!5,rounded corners,align=left},
   activity/.style={draw,rectangle,rounded corners,fill=cyan!10},
   startstop/.style={draw,ellipse,fill=black!5},
