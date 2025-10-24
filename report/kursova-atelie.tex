@@ -1,0 +1,222 @@
+% !TEX program = pdflatex
+% Курсова робота: Інформаційна система ательє
+% Структура оформлена відповідно до ДСТУ (ЗМІСТ, нумерація, посилання)
+\documentclass[14pt,a4paper]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[ukrainian]{babel}
+\usepackage{geometry}
+\geometry{left=30mm,right=15mm,top=20mm,bottom=20mm}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=black}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,shapes.misc,fit,backgrounds}
+
+% Зручні стилі для діаграм
+\tikzset{
+  actor/.style={draw,rounded corners,minimum height=7mm,minimum width=16mm,fill=gray!10},
+  usecase/.style={draw,ellipse,minimum height=8mm,minimum width=24mm,fill=blue!5},
+  comp/.style={draw,rectangle,rounded corners,fill=green!5,minimum width=28mm,minimum height=10mm},
+  db/.style={draw, cylinder, shape border rotate=90, aspect=0.2, minimum height=13mm, minimum width=10mm, fill=orange!10},
+  entity/.style={draw,rectangle,fill=yellow!10,rounded corners},
+  class/.style={draw,rectangle,fill=purple!5,rounded corners,align=left},
+  activity/.style={draw,rectangle,rounded corners,fill=cyan!10},
+  startstop/.style={draw,ellipse,fill=black!5},
+  edge/.style={-Latex,thick},
+}
+
+\begin{document}
+
+% Титульна сторінка
+\begin{titlepage}
+  \centering
+  \large
+  Міністерство освіти і науки України\\
+  [1ex]
+  Назва університету\\
+  Кафедра інформаційних систем\\[12ex]
+  \textbf{КУРСОВА РОБОТА}\\[1ex]
+  з дисципліни: «Проєктування інформаційних систем»\\[1ex]
+  на тему: \textbf{«Інформаційна система ательє»}\\[12ex]
+  Виконав(ла): Студент(ка) групи ХХ-ХХ\\
+  Керівник: ПІБ, науковий ступінь\\[10ex]
+  Місто — 2025
+\end{titlepage}
+
+% ЗМІСТ (відповідно до ДСТУ)
+\tableofcontents
+\newpage
+
+\section*{Перелік умовних скорочень}
+\addcontentsline{toc}{section}{Перелік умовних скорочень}
+ІС — інформаційна система; БД — база даних; UML — Unified Modeling Language; ER — Entity–Relationship.
+
+\section{Вступ}
+Мета роботи — спроєктувати та описати ІС для ательє: облік клієнтів, замовлень, послуг, матеріалів, розрахунки, звітність. Завдання: аналіз предметної області, визначення вимог, проєктування структури даних, розробка діаграм (прецедентів, класів, ER, активностей, архітектури), опис інтерфейсів та алгоритмів.
+
+\section{Огляд предметної області і вимоги}
+\subsection{Актори}
+Клієнт; Адміністратор (приймання замовлень); Майстер; Менеджер (матеріали, постачання); Бухгалтер/Система оплат.
+\subsection{Функціональні вимоги}
+\begin{enumerate}[label=F\arabic*.]
+  \item Реєстрація та ведення картки клієнта.
+  \item Приймання замовлення: вибір послуг, зняття мірок, терміни, передплата.
+  \item Планування і виконання робіт майстрами; відстеження статусів.
+  \item Облік матеріалів і витрат.
+  \item Розрахунки, чеки, акти; закриття замовлення і видача виробу.
+  \item Звіти: завантаження майстрів, прибутковість, матеріаломісткість.
+\end{enumerate}
+\subsection{Нефункціональні вимоги}
+Доступність, цілісність даних, аудит змін, рольовий доступ, резервне копіювання, масштабованість.
+
+\section{Діаграма прецедентів (Use Case)}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=12mm]
+    % Актори
+    \node[actor] (client) {Клієнт};
+    \node[actor, below=of client] (admin) {Адміністратор};
+    \node[actor, below=of admin] (master) {Майстер};
+    \node[actor, below=of master] (manager) {Менеджер};
+    \node[actor, below=of manager] (accountant) {Бухгалтер};
+
+    % Межі системи
+    \node[draw, dashed, fit={(6,-4) (15,4)}, inner sep=6mm, label=above:{ІС Ательє}] (system) {};
+
+    % Прецеденти
+    \node[usecase] (reg) at (9,3) {Вести клієнтів};
+    \node[usecase] (order) at (11,1.5) {Оформити замовлення};
+    \node[usecase] (measure) at (13,3) {Зняти мірки};
+    \node[usecase] (schedule) at (9,0) {Планувати роботи};
+    \node[usecase] (execute) at (13,0) {Виконати роботи};
+    \node[usecase] (materials) at (9,-1.8) {Облік матеріалів};
+    \node[usecase] (payment) at (13,-1.8) {Оплати і чеки};
+    \node[usecase] (close) at (11,-3.2) {Видати виріб і закрити};
+
+    % Зв'язки акторів
+    \draw[edge] (admin.east) -- (reg.west);
+    \draw[edge] (client.east) -- (order.west);
+    \draw[edge] (admin.east) -- (order.west);
+    \draw[edge] (admin.east) -- (measure.west);
+    \draw[edge] (manager.east) -- (materials.west);
+    \draw[edge] (master.east) -- (execute.west);
+    \draw[edge] (accountant.east) -- (payment.west);
+    \draw[edge] (admin.east) -- (close.west);
+
+    % include/extend (спрощено підписом)
+    \draw[edge] (order) -- node[above]{include} (measure);
+    \draw[edge] (close) -- node[right]{extend} (payment);
+  \end{tikzpicture}
+  \caption{Діаграма прецедентів ІС ательє}
+\end{figure}
+
+\section{Архітектура та структура рішення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=10mm]
+    \node[comp] (ui) {UI: Web/Mobile};
+    \node[comp, below=of ui] (api) {API: REST/GraphQL};
+    \node[comp, below=of api] (service) {Сервіси: Замовлення, Клієнти, Склад, Платежі};
+    \node[db, right=25mm of service] (db) {БД};
+    \node[comp, left=25mm of service] (auth) {Аутентифікація/Авторизація};
+
+    \draw[edge] (ui) -- (api);
+    \draw[edge] (api) -- (service);
+    \draw[edge] (service) -- (db);
+    \draw[edge] (api) -- (auth);
+  \end{tikzpicture}
+  \caption{Високорівнева архітектура}
+\end{figure}
+Коротко: клієнтські застосунки взаємодіють з API, доменні сервіси інкапсулюють логіку, дані зберігаються у БД; окремий сервіс автентифікації.
+
+\section{ER-діаграма бази даних}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=12mm]
+    \node[entity] (client) {КЛІЄНТ\\id, ПІБ, телефон, email, адреса};
+    \node[entity, right=30mm of client] (order) {ЗАМОВЛЕННЯ\\id, client\_id, дата, статус, передплата, сума};
+    \node[entity, below=of order] (orderitem) {ПОЗИЦІЯ\\id, order\_id, послуга\_id, ціна, кількість};
+    \node[entity, below=of client] (measure) {МІРКИ\\id, client\_id, параметри, дата};
+    \node[entity, right=30mm of order] (service) {ПОСЛУГА\\id, назва, тариф};
+    \node[entity, below=of service] (material) {МАТЕРІАЛ\\id, назва, од., ціна, залишок};
+    \node[entity, below=of orderitem] (usage) {ВИТРАТА\\id, order\_id, material\_id, кількість};
+    \node[entity, below=of usage] (payment) {ПЛАТІЖ\\id, order\_id, дата, сума, тип};
+
+    \draw[edge] (client) -- node[above]{1..*} (order);
+    \draw[edge] (order) -- node[right]{1..*} (orderitem);
+    \draw[edge] (client) -- node[left]{1..*} (measure);
+    \draw[edge] (orderitem) -- node[above]{*..1} (service);
+    \draw[edge] (usage) -- node[above]{*..1} (material);
+    \draw[edge] (order) -- node[right]{1..*} (usage);
+    \draw[edge] (order) -- node[right]{1..*} (payment);
+  \end{tikzpicture}
+  \caption{ER-модель даних ательє}
+\end{figure}
+
+\section{Діаграма класів}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=10mm]
+    \node[class] (Client) {\textbf{Client}\\+id: int\\+fullName: string\\+phone: string\\+email: string\\+address: string\\+getActiveOrders()};
+    \node[class, right=25mm of Client] (Order) {\textbf{Order}\\+id: int\\+clientId: int\\+date: date\\+status: OrderStatus\\+prepaid: money\\+total: money\\+calculateTotal()};
+    \node[class, below=of Order] (OrderItem) {\textbf{OrderItem}\\+id: int\\+orderId: int\\+serviceId: int\\+price: money\\+qty: number};
+    \node[class, above=of Order] (Measurement) {\textbf{Measurement}\\+id: int\\+clientId: int\\+params: json\\+date: date};
+    \node[class, right=30mm of Order] (Service) {\textbf{Service}\\+id: int\\+name: string\\+rate: money};
+    \node[class, right=30mm of OrderItem] (Material) {\textbf{Material}\\+id: int\\+name: string\\+uom: string\\+price: money\\+stock: number\\+reserve(qty)};
+    \node[class, below=of OrderItem] (Payment) {\textbf{Payment}\\+id: int\\+orderId: int\\+date: date\\+amount: money\\+type: PaymentType};
+
+    \draw[edge] (Client) -- node[above]{1..*} (Order);
+    \draw[edge] (Order) -- node[right]{1..*} (OrderItem);
+    \draw[edge] (Client) -- node[left]{1..*} (Measurement);
+    \draw[edge] (OrderItem) -- node[above]{*..1} (Service);
+    \draw[edge] (Order) -- node[right]{1..*} (Payment);
+  \end{tikzpicture}
+  \caption{Діаграма класів}
+\end{figure}
+
+\section{Діаграма активностей (workflow) замовлення}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[node distance=8mm]
+    \node[startstop] (start) {Старт};
+    \node[activity, below=of start] (create) {Приймання замовлення};
+    \node[activity, below=of create] (measure) {Зняття мірок};
+    \node[activity, below=of measure] (plan) {Планування та призначення майстра};
+    \node[activity, below=of plan] (exec) {Виконання робіт};
+    \node[activity, below=of exec] (qc) {Примірка/контроль якості};
+    \node[activity, below=of qc] (payment) {Оплата, закриття};
+    \node[startstop, below=of payment] (end) {Кінець};
+
+    \draw[edge] (start) -- (create) -- (measure) -- (plan) -- (exec) -- (qc) -- (payment) -- (end);
+  \end{tikzpicture}
+  \caption{Activity-діаграма життєвого циклу замовлення}
+\end{figure}
+
+\section{Проєктування інтерфейсу користувача}
+Сторінки: реєстр клієнтів, картка клієнта з мірками; реєстр замовлень; картка замовлення (послуги, матеріали, платежі, статуси); звіти.
+
+\section{Економічне обґрунтування та план впровадження}
+Кошторис на розробку, витрати на інфраструктуру, очікуваний ефект (скорочення часу обслуговування, прозорість обліку), ризики і заходи зниження.
+
+\section{Висновки}
+Розроблено структурну модель ІС ательє, спроєктовано БД та основні UML-діаграми; визначено ключові функції та вимоги.
+
+\section*{Список використаних джерел}
+\addcontentsline{toc}{section}{Список використаних джерел}
+1. Fowler M. UML Distilled.\\
+2. Ambler S. Agile Modeling.\\
+3. ISO/IEC/IEEE 42010:2011.\\
+4. ДСТУ 3008:2015 Документація. Звіти у сфері науки і техніки.
+
+\end{document}
